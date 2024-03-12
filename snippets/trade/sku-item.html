@@ -1,0 +1,138 @@
+
+<div class="shopline-element-cart-sku-item trade-cart-sku-item{{#and (compare data.maxPurchaseTotalNum '<=' 0) (compare data.maxPurchaseReasonCode '==' 'STOCK_OVER')}} sold-out{{/and}}{{#if inactive '==' true}} inactive{{/if}}"
+     id="{{ trade_cart_type }}{{ append '-card-sku-item-' (numToString data.groupId) '-' data.spuId '-' data.skuId '-' (numToString data.uniqueSeq) }}">
+    <a class="trade-cart-sku-item-image"
+       href="{{#if (compare data.productSource '===' 1)}}{{ redirect_to (append '/products/' (default data.handle data.spuId)) }}{{else}}javascript:;{{/if}}"
+       data-product-source="{{ data.productSource }}"
+       data-group-id="{{ numToString data.groupId }}"
+       data-name="{{ data.name }}"
+       data-sku-id="{{ data.skuId }}"
+       data-spu-id="{{ data.spuId }}"
+       data-sku-attrs="{{ join data.skuAttr ',' }}"
+       data-price="{{ data.price }}"
+       data-sale-price="{{ data.salePrice }}"
+       data-item-no="{{ data.itemNo }}"
+       data-custom-category-name="{{ data.customCategoryName }}"
+    >
+    {{#unless data.image}}
+      <div class="trade-cart-sku-item-image-fallback global-media-border-shadow"></div>
+    {{else}}
+      <div class="hide trade-cart-sku-item-image-fallback global-media-border-shadow"></div>
+      <img class="trade-cart-sku-item-image-wrapper global-media-border-shadow" src="{{ img_url data.image width=image-width scale=2 }}" alt="{{ data.name }}" origin-src="{{ data.image }}">
+    {{/unless}}
+    {{#if data.bindProductImages}}
+        <ul class="trade-cart-sku-item-image-wrapper__accessorial__list">
+          {{#each data.bindProductImages}}
+            <li style="background: url('{{{ this }}}') center center;"></li>
+          {{/each}}
+        </ul>
+      {{/if}}
+    <div class="trade-cart-sku-item-image-sold-out body6">{{ t 'products.product_list.product_sold_out' }}</div>
+  </a>
+  <div class="trade-cart-sku-item-info">
+    <div class="trade-cart-sku-item-info-title body2">
+      {{ data.name }}</div>
+      {{#if (or data.skuAttributes data.properties)}}
+      <div class="trade-cart-sku-item-info-wrapper">
+        {{#if data.skuAttributes}}
+          {{#unless (isEmpty data.skuAttributes)}}
+            {{#each data.skuAttributes}}
+              <div class="trade-cart-sku-item-info-spec body3" {{{ this.shopline_attributes }}}>
+                <div class="trade-cart-sku-item-info-spec-key">{{ this.attributeName }}:</div>
+                <div class="trade-cart-sku-item-info-spec-value">{{ this.attributeValue }}</div>
+              </div>
+            {{/each}}
+          {{/unless}}
+        {{/if}}
+        {{#if data.properties}}
+          {{#each data.properties}}
+            <div class="trade-cart-sku-item-info-spec body3" translate="no" {{{ this.shopline_attributes }}}>
+              <div class="trade-cart-sku-item-info-spec-key">{{ this.name }}:</div>
+              {{#if this.type '==' 'text'}}
+                <div class="trade-cart-sku-item-info-spec-value">{{ this.value }}</div>
+              {{else}}{{#if this.type '==' 'picture'}}
+                <div class="trade-cart-sku-item-info-spec-value trade-cart-sku-item-customization trade-cart-sku-item-customization-preview-btn" data-preview-list="{{ json this.urls }}">
+                  {{ t 'cart.item.custom_preview' }}
+                </div>
+              {{else}}{{#if this.type '==' 'link'}}
+                <div class="trade-cart-sku-item-info-spec-value trade-cart-sku-item-customization trade-cart-sku-item-customization-look-btn">
+                  <a href="{{ cond (boolean (itemAt this.urls 0)) (itemAt this.urls 0) '' }}" class="body3" target="_blank" >{{ t 'cart.item.click_to_view' }}</a>
+                </div>
+              {{/if}}{{/if}}{{/if}}
+            </div>
+          {{/each}}
+        {{/if}}
+        {{#if data.subscriptionInfo.sellingPlanName}}
+          <div class="trade-cart-sku-item-info-spec body3">
+            <div class="trade-cart-sku-item-info-spec-key">{{ t 'cart.subscription.information' }}:</div>
+            <div class="trade-cart-sku-item-info-spec-value">{{ data.subscriptionInfo.sellingPlanName }}</div>
+          </div>
+        {{/if}}
+        {{#if data.customProductTips}}
+          {{#unless (isEmpty data.customProductTips)}}
+            {{#each data.customProductTips}}
+              <div class="trade-cart-sku-item-info-customTip notranslate" {{{ this.shopline_attributes }}}>{{ this }}</div>
+            {{/each}}
+          {{/unless}}
+        {{/if}}
+      </div>
+      {{/if}}
+
+      <div class="slot-cart slot-cart-item-info" data-slot-cart-item-info></div>
+      {{#if (boolean (toInt data.lineLevelTotalDiscount) '>' 0 '&&' data.lineLevelDiscountAllocations)}}
+        {{#each data.lineLevelDiscountAllocations}}
+          <div class="trade-cart-sku-item-info-discount sale-color body4">
+            <div class="trade-cart-sku-item-info-discount-icon">
+              {{ snippet 'icons/icon_discount_tag' }}
+              {{~#if discountApplication.displayLabel~}}
+    <span>&nbsp;{{discountApplication.displayLabel}}</span>
+{{~else if discountApplication.title~}}
+    <span>&nbsp;{{discountApplication.title}}</span>
+{{~/if~}}
+            </div>
+            <div class="trade-cart-sku-item-info-discount-number"><span>&nbsp;(-</span><span class="isolate notranslate is-promotion"
+                data-amount={{ amount }}>{{ money_exchange_convert_with_currency amount }}</span><span>)</span>
+            </div>
+          </div>
+        {{/each}}
+      {{/if}}
+      {{#if (and data data.businessFlag (boolean data.businessFlag.discountable '==' false))}}
+        <div class="trade-cart-sku-item-info-discount sale-color body4">{{ t 'cart.promotion.no_promotion' }}</div>
+      {{/if}}
+    <div class="trade-cart-sku-item-info-number">
+      <div class="trade-cart-sku-item-info-left">
+        {{#or (boolean data.businessFlag '&&' data.businessFlag.singleAdjustNum '===' false) (compare data.maxPurchaseTotalNum '==' 0) (or inactive (not (trade_cart_show_remove data skuNumMap)))}}
+          <div class="trade-cart-sku-item-info-sku-number body3 notranslate">x<span>{{ data.num }}</span></div>
+          {{else}}
+          <div class="trade-cart-sku-item-info-left-stepper">
+            {{ assign 'isError' (boolean data.errorList.length '&&' (boolean data.errorList.[0] '!=' '0105')) }}
+            {{ include 'snippets/trade/stepper' isError=isError count=data.num findex=findex index=index }}
+          </div>
+        {{/or}}
+        {{#if data.errorList}}
+          <span class="promotion-limited" data-promotion-limited-data="{{ json data }}" data-promotion-limited-item-id="{{ trade_cart_type }}{{ append '-card-sku-item-' (numToString data.groupId) '-' data.spuId '-' data.skuId '-' (numToString data.uniqueSeq) }}"></span>
+        {{/if}}
+      </div>
+      <div class="trade-cart-sku-item-info-amount-and-discount">
+        <div class="trade-cart-sku-item-info-amount body3{{#if (boolean (toInt data.lineLevelTotalDiscount) '>' 0 '&&' (toInt data.originalLinePrice) '>' (toInt data.finalLinePrice))}} has-discount{{/if}}">
+          {{#if (boolean (toInt data.lineLevelTotalDiscount) '>' 0 '&&' (toInt data.originalLinePrice) '>' (toInt data.finalLinePrice))}}
+            <span class="trade-cart-sku-item-info-amount-through isolate notranslate" data-amount={{ data.originalLinePrice }}>{{ money_exchange_convert_with_currency data.originalLinePrice }}</span>
+          {{/if}}
+          <span class="trade-cart-sku-item-real-price isolate notranslate trade-cart-sku-item-info-amount-sale-price" data-amount={{ data.finalLinePrice }}>
+            {{ money_exchange_convert_with_currency data.finalLinePrice }}{{#if (toInt data.priceType) '==' 1}}<span class="trade-cart-sku-item-info-tag" data-vip-tag="small"></span>{{/if}}
+
+            <span class="slot-cart slot-cart-price-end" data-slot-cart-price-end></span>
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <div class="slot-cart slot-cart-num-editor-end" data-slot-cart-num-editor-end></div>
+      {{#if (or (compare (boolean data.businessFlag) '===' false) (and data.businessFlag (boolean data.businessFlag.singleDelete '===' true)))}}
+        <div class="trade-cart-sku-item-remove">
+          <button class="trade-cart-sku-item-remove-button body3 btn-link">{{ t 'cart.checkout_proceeding.remove' }}</button>
+        </div>
+      {{/if}}
+  </div>
+  <div class="trade-cart-sku-item-mask"></div>
+</div>

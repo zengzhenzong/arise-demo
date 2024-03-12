@@ -1,0 +1,62 @@
+
+<div class="trade_summations_fee {{hideCls}} {{#if showWithZeroValue '!=' true}} {{#if value '==' 0}} hide {{/if}}  {{/if}}" data-key="{{key}}"
+  {{add_dataset 'showDetail' showDetail }}
+  {{add_dataset 'value' value }}
+  {{add_dataset 'showWithZeroValue' showWithZeroValue }}
+  {{add_dataset 'freeShipTxt' freeShipTxt }}
+  {{add_dataset 'nextStepCalcTxt' nextStepCalcTxt }}>
+  {{#if key '!==' 'deductMemberPointAmount' }}
+      <div class="col textLeft {{prefixCls}}">
+    {{label}}
+    <span class="trade_summations_fee__tips" data-tips="{{tips}}" {{add_dataset 'hasTips' (boolean tips) }} {{add_dataset 'showTips' showTips }}>
+      {{#if showTips}}
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg" style="cursor: pointer;">
+          <circle cx="6" cy="6" r="5.5" stroke="currentColor" />
+          <path d="M6 3V6.5" stroke="currentColor" stroke-linecap="round" />
+          <circle cx="6" cy="8.75" r="0.75" fill="currentColor" />
+        </svg>
+      {{/if}}
+    </span>
+  </div>
+  {{else}}
+    <div class="col textLeft {{prefixCls}}">
+      {{include
+        'snippets/trade/commons/checkbox'
+        id='trade_checkout_point_checkbox'
+        children=label
+        checked=memberPointInfo.use
+        parentClass="cart-member-point-checkbox"
+        disabled=memberPointInfo.grayButton
+      }}
+    </div>
+  {{/if}}
+  <div class="trade_summations__amount col textRight {{#if showDetail}}showDetail{{/if}} {{#if suffixCls }} {{suffixCls}} {{else}}black{{/if}}">
+    <span class="trade_summations__amount_reduce {{#if showReduce }} {{else}} hide {{/if}}">-</span>
+    {{#if (typeOf value) '==' 'number' }}
+        <span class="trade_summations__amount-box isolate notranslate" data-amount={{value}}>{{money_exchange_convert_with_currency value}}</span>
+    {{else }}
+      <span class="trade_summations__amount-box">
+
+        {{t value}}</span>
+    {{/if}}
+  </div>
+</div>
+
+{{#if key "==" "deductMemberPointAmount"}}
+  <div class="trade_summations_fee pointAmount_remark {{hideCls}} {{#if memberPointInfo.use}} pointAmount_use {{/if}}" data-key="{{key}}">
+      <div class="pointAmount_remark_notAvailable {{#if (isFalsey memberPointInfo.grayButton)}} hide {{/if}}">
+        {{memberPointInfo.notAvailableReason}}
+      </div>
+      <div class="trade_summations_fee__desc {{#if (boolean memberPointInfo.use '||' (isTruthy memberPointInfo.grayButton))}} hide {{/if}}">{{t
+          "transaction.refund.deduct_point"
+          deductMemberPointNum=memberPointInfo.deductMemberPointNum
+        }}
+        <span class="deductMemberPointAmount">
+          {{money_exchange_convert_with_currency memberPointInfo.deductMemberPointAmount}}
+        </span>
+      </div>
+      <div class="trade_summations_remark {{#if (boolean (boolean memberPointInfo.use '==' false) '||' (isTruthy memberPointInfo.grayButton))}} hide {{/if}}">
+        {{t "transaction.refund.cost_points" value=memberPointInfo.deductMemberPointNum}}
+      </div>
+  </div>
+{{/if}}

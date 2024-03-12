@@ -1,0 +1,69 @@
+{{assign "isStandard" false}}
+{{#if paymentButtonConfig.grayscaleButtonLocation}}
+  {{#contains paymentButtonConfig.grayscaleButtonLocation "cart"}}
+    {{assign "isStandard" true}}
+  {{/contains}}
+{{/if}}
+
+ <button class="trade-cart-banner--close"><svg aria-hidden="true" focusable="false" role="presentation"
+     xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 13 13">
+     <path fill-rule="evenodd" d="M5.306 6.5L0 1.194 1.194 0 6.5 5.306 11.806 0 13 1.194 7.694 6.5 13 11.806 11.806 13 6.5 7.694 1.194 13 0 11.806 5.306 6.5z">
+     </path>
+   </svg></button>
+
+<div class="slot-cart slot-cart-list-header" data-slot-banner-cart-list-header></div>
+ <div class="trade-cart-banner">
+   <div class="trade-cart-banner-title title6">
+     <span class="trade-cart-banner--product-title--icon"><svg aria-hidden="true" focusable="false" role="presentation" width="18" height="13" viewBox="0 0 18 13"
+         xmlns="http://www.w3.org/2000/svg">
+         <path fill="currentColor" fill-rule="evenodd" d="M6.23 9.1L2.078 5.2 0 7.15 6.23 13 18 1.95 15.923 0z"></path>
+       </svg></span>
+    {{t 'cart.cart.added_to_cart'}}
+   </div>
+   <div class="trade-cart-banner--product">
+     <div class="shopline-element-cart-sku-item trade-cart-sku-item">
+       <div class="trade-cart-sku-item-image-wrapper"></div>
+        <div class="trade-cart-sku-item-info">
+          <div class="trade-cart-sku-item-info-title body2"></div>
+          <div class="trade-cart-sku-item-info-attrs"></div>
+          <div class="trade-cart-sku-item-info-custom"></div>
+          <div class="slot-cart slot-cart-item-info" data-slot-banner-cart-item-info></div>
+          <div class="trade-cart-sku-item-info-amount body3"></div>
+        </div>
+     </div>
+
+      <div class="slot-cart slot-cart-item-end" data-slot-banner-cart-item-end></div>
+   </div>
+ </div>
+ <div class="trade-cart-banner-summations">
+   <div class="trade-cart-banner-summations-subtotal">
+     <span class="trade-cart-banner-summations-subtotal--label body2">
+        {{t 'cart.cart.cart_subtotal'}}
+     </span>
+     <span class="notranslate body1 text_bold trade-cart-banner-summations-subtotal--price"></span>
+   </div>
+
+  <div class="slot-cart slot-cart-calculation-end" data-slot-banner-cart-calculation-end></div>
+   <footer class="trade-cart-banner-summations-footer">
+    <button class="btn trade-cart-banner-summations-footer-view-cart body3 text_bold" onclick="window.location.href='{{redirect_to "/cart"}}'"> {{t 'cart.item.view_cart'}} (<span
+      class="trade-cart-banner-summations-footer-cart-total"></span>)</button>
+
+    {{#if isStandard}}
+      <div id="additional_button_mini-cart-pay-button" class="pay-button-cart">
+        <button type="button" class="pay-button-checkout btn btn-primary">
+          {{t "cart.checkout_proceeding.checkout"}}
+        </button>
+      </div>
+    {{else}}
+      <div class="sidebar__trade-cart-checkout">
+        <button type="button" data-sl-module="button__trade-cart-checkout" class="shopline-element-cart-checkout btn trade-cart-banner-summations-footer-checkout text_bold body3" id="mini-cart-spb-slibing"
+          style="width: 100%;">
+          {{ t 'cart.checkout_proceeding.checkout' }}
+          {{snippet 'btn-loading-spinner'}}
+        </button>
+      </div>
+    {{/if}}
+   </footer>
+
+    <div class="slot-cart slot-cart-checkout-end slot-cart-checkout-end_top" data-slot-banner-cart-checkout-end></div>
+ </div>

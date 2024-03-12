@@ -1,0 +1,25 @@
+<div class="base-input {{wrapperClass}}">
+  <div class="base-input-area {{ cond (boolean type '===' 'textarea') 'is-textarea' ''  }}">
+    {{#if type '===' 'textarea'}}
+      <textarea type="text" placeholder="{{cond placeholder placeholder 'please input'}}" class="base-input__inpEle" {{{inputRestAttr}}}>{{ value }}</textarea>
+    {{else}}
+      <input type="text" placeholder="{{cond placeholder placeholder 'please input'}}" class="base-input__inpEle" value="{{value}}" {{{inputRestAttr}}} />
+    {{/if}}
+    <span class="placeholder">
+      {{#if required '==' 'true'}}
+        *
+      {{/if}}
+      {{cond placeholder placeholder 'please input'}}
+    </span>
+  </div>
+  {{#if addonAfter}}
+    <div class="base-input__addonAfter">
+      {{{addonAfter}}}
+    </div>
+  {{/if}}
+  {{#if staticAddonAfter}}
+    <div class="base-input__staticAddonAfter">
+      {{{staticAddonAfter}}}
+    </div>
+  {{/if}}
+</div>

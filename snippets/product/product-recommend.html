@@ -1,0 +1,37 @@
+<style>
+  @media (max-width: 749.98px) {
+    .section-gap .product-recommend {
+      padding-left: 0;
+      padding-right: 0;
+    }
+
+    .product-recommend .product-item-swiper-list {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .product-recommend .product-item-swiper-list .swiper-container {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+
+  @media (min-width: 749.98px) {
+    .section-gap .product-recommend {
+      .product-item-swiper-list  {
+        {{#if request.document_direction '===' 'rtl'}}
+          margin-left: 0;
+        {{else}}
+          margin-right: 0;
+        {{/if}}
+      }
+    }
+  }
+</style>
+<div class="container section-gap recommend">
+  
+  <div data-ssr-product-recommend-bottom></div>
+  
+  <div style="display: none;">
+    {{snippet "product/commons/product-item-list"}}
+  </div>
+</div>

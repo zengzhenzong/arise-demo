@@ -1,0 +1,18 @@
+{{ assign 'name' request.uri.query.name }}
+{{ assign 'logo' request.uri.query.logo }}
+
+<div class="unsubscribeFeedback">
+  <div class="unsubscribeFeedbackBody">
+    {{#if logo}}
+    <div class="logo">
+      <img src="{{logo}}" alt="" />
+    </div>
+    {{/if}}
+    <div class="title">
+      {{{ t 'customer.subscription.unsubscribe_feedback_title' name=name }}}
+    </div>
+    <div class="text">
+      {{t 'customer.subscription.unsubscribe_feedback_text'}}
+    </div>
+  </div>
+</div>

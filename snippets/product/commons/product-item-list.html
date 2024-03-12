@@ -1,0 +1,28 @@
+
+
+{{assign '_colNum' 4}}
+{{assign '_lgColNum' 3}}
+{{assign '_mbColNum' 2}}
+{{#if colNum}}
+  {{assign '_colNum' colNum}}
+  {{assign '_lgColNum' colNum}}
+{{/if}}
+{{#if mbColNum}}
+  {{assign '_mbColNum' mbColNum}}
+{{/if}}
+
+{{#if effectPage '==' 'productList'}}
+<div class="product-list-item-parent-controller row row-cols-{{_mbColNum}} row-cols-lg-{{_lgColNum}} row-cols-xl-{{_colNum}} product-list-small-grid {{ append (cond listClassName listClassName '')}}" id="product-list-container">
+{{else}}
+<div class="product-list-item-parent-controller row row-cols-{{_mbColNum}} row-cols-md-{{_colNum}}">
+{{/if}}
+  {{#each listData as |item|}}
+    <div class="col product-item-list">
+      {{snippet 'product/commons/product-item' closeLazy=(if @index '<' 2) subTitleShowType=../subTitleShowType previewQuery=../previewQuery spu=item forbiddenBtn=../forbiddenBtn index=@index className=../className }}
+    </div>
+  {{/each}}
+</div>
+
+{{#if (boolean total '>' pageSize '&&' (isFalsey infiniteScroll))}}
+  {{snippet 'product/commons/pagination' mode='href' id="pagination"  total=total pageSize=pageSize current=pageNum request=request }}
+{{/if}}

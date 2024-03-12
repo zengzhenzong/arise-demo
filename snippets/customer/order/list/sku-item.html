@@ -1,0 +1,90 @@
+{{#with data}}
+  <div class="shopline-element-order-history-list-item customer-order-sku-item" data-id="{{orderSeq}}" {{{ data.shopline_attributes }}}>
+    <div class="wrapper">
+      <div class="customer-order-sku-item-header">
+        <div>
+          
+          <span class="seq">{{t 'order.order_status.sequence'  id=appOrderSeq }}</span>
+          
+          <div class="create-time">
+            <span>{{t 'order.order_details.time'}}</span>
+            <span>{{dayjs method='format' init=orderTime format='YYYY-MM-DD HH:mm A (z)' tz=@root.storeInfo.timezone}}</span>
+          </div>
+        </div>
+        
+        {{#if (boolean bizOrderStatus '==' 400)}}
+          <span class="status cancelled">
+            {{t 'order.order_status.canceled'}}
+          </span>
+        {{/if}}
+      </div>
+      <div class="customer-order-sku-item-content">
+        <div class="item-info">
+          <div class="sku-item-image">
+            {{#if productImage}}
+              <img class="lozad" data-src="{{ productImage }}" alt="" />
+            {{else}}
+              <div class="sku-item-image-fallback"></div>
+            {{/if}}
+          </div>
+
+          <div class="product-total">
+            {{#if (boolean productNum '>' 1)}}
+              <span>{{t 'order.order_list.total_amount' transPackages=productNum }}</span>
+            {{else}}
+              <span>{{t 'order.order_list.total_amount' transPackages=productNum }}</span>
+            {{/if}}
+          </div>
+        </div>
+
+        <div class="pay-status-pc {{#if @root.request.is_mobile}}hide{{/if}}">
+          
+          <p class="status-box">
+            <span class="svg-wrapper">
+              <svg width="16" height="17" viewBox="0 0 16 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                  <rect x="2" y="3.5" width="12" height="10" rx="0.5" stroke="currentColor" />
+                  <path d="M2 6.5H14" stroke="currentColor" />
+                  <path d="M8.6665 11.8335C8.6665 11.2812 9.11422 10.8335 9.6665 10.8335H11.6665C12.2188 10.8335 12.6665 11.2812 12.6665 11.8335H8.6665Z" fill="currentColor" />
+                </g>
+              </svg>
+            </span>
+            <span class="status-info">
+              {{snippet 'customer/order/list/order-pay-status' status=financialStatus}}
+            </span>
+          </p>
+          
+          <p class="status-box">
+            <span class="svg-wrapper">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g>
+                  <path
+                    d="M2 12V7.07819C2 6.59438 2.26208 6.14853 2.6848 5.91321L5.85714 4.14721V3.33333C5.85714 2.59695 6.4541 2 7.19048 2H12.6667C13.403 2 14 2.59695 14 3.33333V12"
+                    stroke="currentColor" />
+                  <path d="M8 4V7H4" stroke="currentColor" />
+                  <circle cx="5.5" cy="12.5" r="1.5" stroke="currentColor" />
+                  <circle cx="10.5" cy="12.5" r="1.5" stroke="currentColor" />
+                </g>
+              </svg></span>
+            <span class="status-info">
+              {{snippet 'customer/order/list/order-delivery-status' status=bizDeliveryStatus}}
+            </span>
+          </p>
+        </div>
+
+        <div class="pay-status-mobile {{#unless @root.request.is_mobile}}hide{{/unless}}">
+          <span>{{snippet 'customer/order/list/order-pay-status' status=financialStatus}}</span>
+          <span class="point"></span>
+          <span>{{snippet 'customer/order/list/order-delivery-status' status=bizDeliveryStatus}}</span>
+        </div>
+
+        <div class="total-info">
+          <p>
+            <span>{{t 'transaction.payment.total'}}</span>
+            <span class="total no-change notranslate isolate" data-amount="{{orderAmount}}"> {{money_with_currency orderAmount code=transCurrency}}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/with}}

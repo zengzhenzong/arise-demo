@@ -1,0 +1,14 @@
+{{ assign 'title' this.settings.title }}
+
+{{#if (and (isFalsey title) (isTruthy normalTitle))}}
+  {{ assign 'title' normalTitle }}
+{{/if}}
+
+{{#if title}}
+  <div class="footer__block-header">
+    <div class="body3 footer__block-title">{{ title }}</div>
+    <div class="footer__block-additional">
+      {{ slot_content }}
+    </div>
+  </div>
+{{/if}}

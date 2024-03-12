@@ -1,0 +1,41 @@
+{{assign "isNewExpressCheckout" paymentButtonConfig.newProcess}}
+
+{{assign "isStandard" false}}
+{{#if paymentButtonConfig.grayscaleButtonLocation}}
+  {{#contains paymentButtonConfig.grayscaleButtonLocation "cart"}}
+    {{assign "isStandard" true}}
+  {{/contains}}
+{{/if}}
+
+{{#if (boolean isStandard "||" (isFalsey paymentButtonConfig))}}
+  <div id="additional_button_{{id}}" class="pay-button-cart">
+    {{assign "inDrawer" (boolean id "===" "mini-cart-spb")}}
+    <button type="button" class="{{#unless inDrawer}}pay-button-common-item{{/unless}} pay-button-checkout btn btn-sm btn-primary">
+      {{t "cart.checkout_proceeding.checkout"}}
+    </button>
+  </div>
+{{else if isNewExpressCheckout}}
+  <div id="payment_button_{{id}}" class="{{trade_cart_type}}__trade-cart-checkout payment-button-container">
+    {{#if trade_cart_type '===' 'sidebar'}}
+      <button type="button" data-sl-module="button__trade-cart-checkout" class="shopline-element-cart-checkout btn btn-primary btn-sm" id="{{id}}-slibing" style="width: 100%">
+        {{t "cart.checkout_proceeding.checkout"}} {{snippet "btn-loading-spinner"}}
+      </button>
+    {{/if}}
+  </div>
+{{else}}
+  <div class="{{trade_cart_type}}__trade-cart-checkout">
+    {{#if (boolean payChannelInfo.showSpbBtn)}}
+      <div id="{{id}}" class="shopline-element-cart-paypal trade-cart-paypal" style="margin-bottom: 10px;"></div>
+    {{/if}}
+    <button
+      type="button"
+      data-sl-module="button__trade-cart-checkout"
+      class="shopline-element-cart-checkout btn btn-primary btn-sm"
+      id="{{id}}-slibing"
+      style="width: 100%;"
+    >
+      {{t "cart.checkout_proceeding.checkout"}}
+      {{snippet "btn-loading-spinner"}}
+    </button>
+  </div>
+{{/if}}

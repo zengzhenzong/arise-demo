@@ -1,0 +1,63 @@
+{{assign 'bannerImageMobile' settings.banner_image_mobile.url}}
+
+{{assign 'marginClass' 'marginClass'}}
+{{assign 'marginClassMobile' 'marginClassMobile'}}
+{{#if (boolean settings.show_category_name)}}
+  {{assign 'boxClass' 'noCover' }}
+  {{assign 'boxClassMobile' 'noCoverMobile' }}
+{{else}}
+  {{assign 'boxClass' 'noCoverAndTitle' }}
+  {{assign 'boxClassMobile' 'noCoverAndTitleMobile' }}
+{{/if}}
+
+{{#if (boolean settings.show_category_cover)}}
+  {{#if (boolean sortation.sortationImg)}}
+    {{assign 'boxClass' 'hasCover' }}
+    {{assign 'boxClassMobile' 'hasCoverMobile' }}
+    {{assign 'marginClass' ''}}
+    {{assign 'marginClassMobile' ''}}
+  {{else if (boolean bannerImageMobile)}}
+    {{assign 'marginClassMobile' ''}}
+    {{assign 'boxClassMobile' 'hasCoverMobile' }}
+  {{/if}}
+{{/if}}
+<div class="product-list-banner-box {{boxClass}} {{boxClassMobile}} {{marginClass}} {{marginClassMobile}}">
+
+  {{#if settings.show_category_cover}}
+    {{ assign 'coverImage' (image_responsive sortation.sortationImg useLazyLoad=false ) }}
+    <div class="product-list-banner-box-bg" id="productListBanner-container">
+      <div class="{{#if settings.parallax_scroll }}product-list-banner-box-bg-img{{else}}product-list-banner-box-bg-img--default{{/if}}" id="productListBanner-parallax" data-parallax-scroll="{{settings.parallax_scroll}}">
+        {{#if sortation.sortationImg}}
+          <img class="d-none d-md-block" referrerpolicy="{{#if imgNoReferrerSwitch}}same-origin{{/if}}"  {{{get 'responsiveAttr' coverImage }}} alt="">
+        {{/if}}
+        {{#if ( boolean bannerImageMobile)}}
+        {{ assign 'banner_mobile_bg' (get 'responsiveAttr' (image_responsive bannerImageMobile useLazyLoad=false))}}
+        {{else}}
+        {{ assign 'banner_mobile_bg' (get 'responsiveAttr' coverImage)}}
+        {{/if}}
+        {{#or (boolean bannerImageMobile) (boolean sortation.sortationImg)}}
+         <img class="d-md-none" referrerpolicy="{{#if imgNoReferrerSwitch}}same-origin{{/if}}"  {{{banner_mobile_bg}}} alt="">
+        {{/or}}
+      </div>
+    </div>
+  {{else}}
+
+    <div id="CollectionHeaderSection" data-section-id="shopline-section-product/collections/collection-header"
+      data-section-type="shopline-section-product/collections/collection-header">
+    </div>
+  {{/if}}
+
+  {{#if settings.show_category_name}}
+    <div class="product-list-banner-box-title {{boxClass}} {{boxClassMobile}}">
+      <div class="container">
+        {{#if theme.settings.show_breadcrumb}}
+        <div class="product-list-crumbs">
+          <a href="{{ redirect_to '/' }}" class="product-list-banner-box-title-url custom-body4">{{t 'general.general.home'}} /</a>
+          <a href="javascript:;" class="product-list-banner-box-title-url custom-body4" style="opacity: .6;">{{sortation.title}}</a>
+        </div>
+        {{/if}}
+        <h1 class="product-list-banner-box-title-sortationTitle custom-title2 title4">{{sortation.title}}</h1>
+      </div>
+    </div>
+  {{/if}}
+</div>

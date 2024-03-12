@@ -1,0 +1,114 @@
+{{ assign 'url' request.uri.domain }}
+{{ assign 'ogTitle' storeInfo.name }}
+{{#if pageInfo.seoTitle.default}}
+  {{ assign 'ogTitle' (useFallbackLang pageInfo.seoTitle request.locale) }}
+{{/if}}
+{{ assign 'ogDescription' storeInfo.name }}
+{{#if pageInfo.seoDesc.default}}
+  {{ assign 'ogDescription' (useFallbackLang pageInfo.seoDesc request.locale) }}
+{{/if}}
+{{#if page_image}}
+  {{ assign 'image' page_image }}
+{{else}}
+  {{ assign 'image' theme.settings.co_checkout_image.url }}
+{{/if}}
+{{ assign 'type' 'home' }}
+{{ assign 'seoTitle' storeInfo.name }}
+{{#if pageInfo.seoTitle.default}}
+  {{ assign 'seoTitle' (useFallbackLang pageInfo.seoTitle request.locale) }}
+{{/if}}
+{{#if pageInfo.seoDesc.default}}
+  {{ assign 'seoDescription' (useFallbackLang pageInfo.seoDesc request.locale) }}
+{{/if}}
+{{#if pageInfo.seoKeyword.default}}
+  {{ assign 'keywords' (useFallbackLang pageInfo.seoKeyword request.locale) }}
+{{/if}}
+
+
+
+  
+
+{{assign '_image' 'https://img.myshopline.com/image/shopline/3439ce4a1e15489193fd9ac622e1143e.png'}}
+{{assign 'twitterCard' (default card 'summary_large_image') }}
+
+
+{{#if image}}
+  {{assign '_image' image}}
+{{/if}}
+{{assign 'title' (default seoTitle '')}}
+
+{{#if canonicalUrl }}
+  {{assign '_canonicalUrl' canonicalUrl}}
+{{else}}
+  {{assign '_canonicalUrl' url}}
+{{/if}}
+
+{{#if title}}
+<meta name="title" content="{{title}}" />
+{{/if}}
+
+{{#if keywords }}
+<meta name="keywords" content="{{keywords}}" /> 
+{{/if}}
+
+
+{{#if seoDescription}}
+  <meta name="description" content="{{sanitize seoDescription}}" />
+{{/if}}
+
+
+
+
+
+
+
+
+{{#if url}}
+  <meta property="og:url" content="{{url}}" />
+{{/if}}
+
+{{#if storeInfo.name}}
+  <meta property="og:site_name" content="{{storeInfo.name}}" />
+{{/if}}
+
+
+{{#if ogTitle}}
+  <meta property="og:title" content="{{ogTitle}}" />
+{{/if}}
+
+{{#if ogDescription}}
+  <meta property="og:description" content="{{sanitize ogDescription}}" />
+{{/if}}
+
+
+{{#if type}}
+  <meta property="og:type" content="{{type}}" />
+{{/if}}
+
+{{#if _image}}
+  <meta property="og:image" content="{{_image}}" />
+  <meta property="og:image:secure_url" content="{{_image}}" />
+  <meta name="twitter:image" content="{{_image}}" />
+{{/if}}
+
+{{#if ogTitle}}
+  <meta name="twitter:title" content="{{ogTitle}}" />
+{{/if}}
+
+
+{{#if ogDescription}}
+  <meta name="twitter:description" content="{{sanitize ogDescription}}" />
+{{/if}}
+
+
+{{#if card}}
+  <meta name="twitter:card" content="{{twitterCard}}" />
+{{/if}}
+
+
+{{#and  (boolean templateAlias '===' 'ProductsDetail')  (isFalsey product.spu.visible)}}
+  <meta name='robots' content='noindex' />
+{{/and}}
+
+
+

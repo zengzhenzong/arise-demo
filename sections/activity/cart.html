@@ -1,0 +1,85 @@
+{{assign "GIFT_PLUGIN_TYPE" 7}}
+
+{{#if (and (compare request.uri.query.type "===" "pool") (compare activity.promotionSubType "===" 0))}}
+  
+  {{#if (not cartInfo)}}
+    {{assign "hasHide" "d-none"}}
+  {{/if}}
+  
+  {{#if cartInfo.activeItems}}
+    {{assign "activeItem" (find-in-array cartInfo.activeItems activity.activitySeq "promotion.activitySeq")}}
+    {{#if activeItem}}
+      {{assign "promotionBenefit" (itemAt activeItem.promotion.promotionBenefitList 0)}}
+      {{assign "promotion" activeItem.promotion}}
+    {{/if}}
+
+    {{assign "hasGiftPlugin" (find-in-array cartInfo.activeItems GIFT_PLUGIN_TYPE "promotion.benefitType")}}
+  {{/if}}
+
+  
+  {{#if (and (not promotion) (not hasGiftPlugin) activity)}}
+    {{ assign 'benefitType' activity.benefitType}}
+    {{ assign 'benefitCondition' activity.benefitConditions.[0]}}
+    {{#if (or (compare benefitType '===' 11) (compare benefitType '===' 12))}}
+      {{#if benefitCondition.benefit.benefitAmount}}
+        {{ assign 'benefitValueType' '1'}}
+      {{else}}
+        {{ assign 'benefitValueType' '2'}}
+      {{/if}}
+    {{/if}}
+    {{ assign 'type' benefitCondition.benefitEvent.type}}
+    {{#if (or (compare benefitType '===' 2) (compare benefitValueType '===' '2'))}}
+      {{ assign 'benefit' benefitCondition.benefit.discount }}
+    {{else}}
+      {{ assign 'benefit' benefitCondition.benefit.benefitAmount}}
+    {{/if}}
+    {{ assign 'amount' benefitCondition.benefitEvent.minThreshold}}
+    {{ assign 'benefitCount' benefitCondition.benefit.benefitCount}}
+    {{ assign 'extMap' (object_create bannerText=activity.cartBannerText.hitNone benefitValueType=benefitValueType)}}
+    {{ assign 'promotionBenefit' (object_create type=type benefit=benefit amount=amount benefitCount=benefitCount extMap=extMap)}}
+    {{ assign 'promotion' (object_create benefitType=benefitType promotionBenefitList=(arrayify promotionBenefit))}}
+  {{/if}}
+  <div class="activity__cart custom-body-color {{hasHide}}" id="activity-cart">
+    
+    <div class="activity__salesTipBg">
+      
+      {{#if (or (not promotion) hasGiftPlugin)}}
+        {{assign "hasHide" "d-none"}}
+      {{/if}}
+      <div class="activity__salesTip container body4 {{hasHide}}">
+        <span id="activity-salesTip"  class="notranslate">
+          
+          {{#if (and promotion (not hasGiftPlugin))}}
+            {{ assign "config" (sales_promotion_reminder_translate promotion)}}
+            {{ noTranslationHTML (javascript_template promotionBenefit.extMap.bannerText config.params (toRegex '\{\s*(\w+)\s*\}' flags="g"))}}
+          {{else}}
+          {{/if}}
+        </span>
+      </div>
+    </div>
+    
+    <div class="activity__cartInfo container">
+      {{#if (not hasGiftPlugin)}}
+        <span id="activity-cartTotalInfo">
+          
+          <span class="activity__cartTotal body3">{{ t "cart.checkout_proceeding.subtotal"  }} :
+            <span id="activity-cartTotal" class="notranslate isolate" data-amount="{{default activeItem.totalAmount 0}}">{{ money_exchange_convert_with_currency (default activeItem.totalAmount 0)}}</span>
+          </span>
+          <br />
+          
+          <span class="activity__cartNum body6">
+            {{noTranslationHTML
+              (t
+                "sales.general.select_promotional_product"
+                selectCount=(javascript_template '<span id="activity-cartNum" class="notranslate">${num}
+</span>' num=(sum (pluck activeItem.itemList "num")))
+              )
+            }}
+          </span>
+        </span>
+      {{/if}}
+      
+      <a href="{{redirect_to '/cart'}}"><button type="button" class="activity__gotoCart btn btn-primary body5">{{ t "cart.checkout_proceeding.return_to_cart" }}</button></a>
+    </div>
+  </div>
+{{/if}}

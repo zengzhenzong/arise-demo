@@ -1,0 +1,10 @@
+ {{#if (boolean status '==' 150)}}
+   
+   {{t 'order.shipping.partially_shipped'}}
+ {{else if (boolean status '==' 400)}}
+   
+   {{ t 'order.shipping.shipped_order'}}
+ {{else}}
+   
+   {{t 'order.shipping.preparing_order'}}
+ {{/if}}

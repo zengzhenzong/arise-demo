@@ -1,0 +1,26 @@
+
+
+{{#if templateAlias '===' 'BlogsDetail'}}
+  {{snippet 'title-tag/blog-detail' }}
+{{else if templateAlias '===' 'BlogsList'}}
+  {{snippet 'title-tag/blog-list' }}
+{{else if templateAlias '===' 'Page'}}
+  {{snippet 'title-tag/pages' }}
+{{else if templateAlias '===' 'Activity'}}
+  {{snippet 'title-tag/activity' }}
+{{else if templateAlias '===' 'Cart'}}
+  {{snippet 'title-tag/cart'}}
+{{else if (boolean (boolean templateAlias '===' 'ProductsDetail') "||" (boolean templateAlias '===' 'PreviewProductsDetail'))}}
+  {{ snippet 'title-tag/product'}}
+{{else if templateAlias '===' 'Products'}}
+  {{ snippet 'title-tag/collections'}}
+{{else if templateAlias '===' 'AllCollections'}}
+  {{ snippet 'title-tag/collections-all'}}
+{{else if templateAlias '===' 'ProductsSearch'}}
+  {{ snippet 'title-tag/search'}}
+
+  
+{{else}}
+  
+  {{snippet 'title-tag/default' }}
+{{/if}}

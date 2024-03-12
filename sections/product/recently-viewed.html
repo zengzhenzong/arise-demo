@@ -1,0 +1,158 @@
+
+<!-- product/recently-viewed/index.js -->
+  {{ combine_asset_tag 
+    'vendors/eventemitter3.min.js'
+    'vendors/@sl_currency-tools-core.min.js'
+    'vendors/uuid.min.js'
+    'vendors/lodash.min.js'
+    'vendors/axios.min.js'
+    'vendors/query-string.min.js'
+    type="text/javascript"
+    defer=true
+  }}
+  {{ combine_asset_tag 
+    'theme-shared/utils/event-bus.js'
+    'theme-shared/utils/parsePathToArray.js'
+    'theme-shared/utils/state-selector.js'
+    'theme-shared/utils/newCurrency/CurrencyConvert.js'
+    'theme-shared/utils/newCurrency/index.js'
+    'theme-shared/utils/currency/getCurrencyCode.js'
+    'theme-shared/utils/report/page.js'
+    'theme-shared/utils/report/tool.js'
+    'theme-shared/report/common/baseReport.js'
+    'theme-shared/utils/syntax-patch.js'
+    'theme-shared/components/hbs/productRecently/fetchTemplate.js'
+    'theme-shared/utils/sectionsLoad/index.js'
+    'product/recently-viewed/index.js'
+    type="text/javascript"
+    defer=true
+  }}
+
+{{#if request.document_direction '===' 'rtl'}}
+  {{ combine_asset_tag 'product/recently-viewed/product-recently-viewed.rtl.css' inline=true}}
+{{else}}
+  {{ combine_asset_tag 'product/recently-viewed/product-recently-viewed.css' inline=true}}
+{{/if}}
+
+{{ assign 'show_product_number' section.settings.show_product_number }}
+<div class="{{#isFalsey (boolean hiddenMount)}}section-gap container{{/isFalsey}}" 
+  data-section-type="recently-viewed"
+  data-section-id="{{ section.id }}"
+>
+  <input type="hidden" data-recently-product-section-id={{ section.id }}>
+  {{#if (boolean hiddenMount '&&' historyBrowseProducts.length)}}
+    <div class="product-detail-block-space"></div>
+    <div class="product-list product-recently-viewed">
+      <div class="product-list-title product-section-title title4">{{ t 'products.recently_viewed_products.recently_viewed_products' }}</div>
+      {{ snippet 'product/commons/product-item-list' colNum=section.settings.pc_cols mbColNum=section.settings.md_cols forbiddenBtn=true listData=(first historyBrowseProducts show_product_number) className='__sl-custom-track-product-recently-viewed-item' }}
+    </div>
+    {{else}}
+    <div id="recently-viewed-products"></div>
+  {{/if}} 
+  
+</div>
+{{#schema}}
+{
+  "name": "t:sections.product_recently-viewed.name",
+  "settings": [
+    {
+      "type": "range",
+      "id": "show_product_number",
+      "label": "t:sections.product_recently-viewed.settings.show_product_number.label",
+      "min": 2,
+      "max": 10,
+      "step": 1,
+      "default": 6
+    },
+    {
+      "id": "pc_cols",
+      "type": "range",
+      "label": "t:sections.product_recently-viewed.settings.pc_cols.label",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "id": "md_cols",
+      "type": "select",
+      "label": "t:sections.product_recently-viewed.settings.md_cols.label",
+      "options": [
+        {
+          "value": 1,
+          "label": "t:sections.product_recently-viewed.settings.md_cols.options__0.label"
+        },
+        {
+          "value": 2,
+          "label": "t:sections.product_recently-viewed.settings.md_cols.options__1.label"
+        }
+      ],
+      "default": 2
+    },
+    {
+      "type": "group_header",
+      "label": "t:sections.product_recently-viewed.settings.group_header__0.label"
+    },
+    {
+      "id": "product_image_ratio",
+      "type": "select",
+      "label": "t:sections.product_recently-viewed.settings.product_image_ratio.label",
+      "options": [
+        {
+          "value": "0",
+          "label": "t:sections.product_recently-viewed.settings.product_image_ratio.options__0.label"
+        },
+        {
+          "value": "100",
+          "label": "t:sections.product_recently-viewed.settings.product_image_ratio.options__1.label"
+        },
+        {
+          "value": "133.33",
+          "label": "3:4"
+        },
+        {
+          "value": "75",
+          "label": "t:sections.product_recently-viewed.settings.product_image_ratio.options__3.label"
+        },
+        {
+          "value": "150",
+          "label": "t:sections.product_recently-viewed.settings.product_image_ratio.options__4.label"
+        }
+      ],
+      "default": "0"
+    },
+    {
+      "id": "product_fill_type",
+      "type": "select",
+      "label": "t:sections.product_recently-viewed.settings.product_fill_type.label",
+      "options": [
+        {
+          "value": "contain",
+          "label": "t:sections.product_recently-viewed.settings.product_fill_type.options__0.label"
+        },
+        {
+          "value": "cover",
+          "label": "t:sections.product_recently-viewed.settings.product_fill_type.options__1.label"
+        }
+      ],
+      "default": "contain"
+    },
+    {
+      "id": "product_hover_show_next",
+      "type": "switch",
+      "label": "t:sections.product_recently-viewed.settings.product_hover_show_next.label",
+      "default": false
+    }
+  ],
+  "default": {
+    "settings": {
+      "show_product_number": 6,
+      "pc_cols": 4,
+      "md_cols": 2,
+      "product_image_ratio": "0",
+      "product_fill_type": "contain",
+      "product_hover_show_next": false
+    }
+  }
+}
+{{/schema}}

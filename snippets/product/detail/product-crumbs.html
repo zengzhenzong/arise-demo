@@ -1,0 +1,14 @@
+<div class="product-crumbs">
+  <a class="body4" href="{{ redirect_to '/'}}">{{t 'general.general.home'}}</a> /
+  {{#if curLinkData.params.collectionHandle}}
+  {{#each sortationList}}
+  {{assign 'collectionHandle' (decodeURI ../curLinkData.params.collectionHandle)}}
+  {{#if collectionHandle uniqueKey}}
+  <a class="product-crumbs-cateName" href="{{ redirect_to (append '/collections/' collectionHandle)}}">{{sortationName}}</a> /
+  {{/if}}
+  {{/each}}
+  {{else if sortationList.length 1}}
+  <a class="product-crumbs-cateName" href="{{ redirect_to ( append '/collections/' sortationList.[0].uniqueKey)}}">{{sortationList.[0].sortationName}}</a> /
+  {{/if}}
+  <a href="javascript:;" class="product-crumbs-productName" style="opacity: .6;">{{ spuInfo.title }}</a>
+</div>

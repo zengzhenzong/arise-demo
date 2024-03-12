@@ -1,0 +1,22 @@
+<div>
+  
+  
+  {{#if ordersPackageList}}
+    
+    {{#each ordersPackageList}}
+      
+      {{snippet 'customer/order/detail/goods' ordersPackageItem=this index=@index unshippedItemInfo=null }}
+    {{/each}}
+    
+    {{#if unshippedItemInfo}}
+    {{#if unshippedItemInfo.unShippedItemList}}
+      {{snippet 'customer/order/detail/goods' unshippedItemInfo=unshippedItemInfo ordersPackageItem=null }}
+    {{/if}}
+    {{/if}}
+  {{else}}
+    
+    {{#if unshippedItemInfo}}
+      {{snippet 'customer/order/detail/goods' unshippedItemInfo=unshippedItemInfo}}
+    {{/if}}
+  {{/if}}
+</div>

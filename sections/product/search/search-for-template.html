@@ -1,0 +1,196 @@
+{{#if request.document_direction '===' 'rtl'}}
+  {{ combine_asset_tag 'product/search/style/index.rtl.css' inline=true}}
+{{else}}
+  {{ combine_asset_tag 'product/search/style/index.css' inline=true}}
+{{/if}}
+
+
+{{ assign 'keyword' (get 'keyword' request.uri.query) }}
+{{ assign 'total' (get 'total' product_search) }}
+{{ assign 'count' (length product_search.list) }}
+{{ assign 'pageNum' (get 'pageNum' product_search) }}
+{{ assign 'pageSize' 48 }}
+
+<main class="product-search__container section-gap">
+  <div class="product-search__body container">
+    {{#if theme.settings.show_breadcrumb}}
+    <nav class="product-search__breadcrumb">
+      <a href="{{ redirect_to '/' }}" title="{{ t 'products.product_search.back_to_home' }}">{{ t 'general.general.home' }}</a>
+      <span class="product-search__breadcrumbDivider">/</span>
+      <span class="product-search__searchText">
+        {{ t 'products.product_search.search' }}
+        {{#if (trim keyword)}}
+          ：
+          {{#if total '===' 1}}
+          {{{ t 'products.product_search.single_results_found' count=total keyword=keyword }}}
+          {{else}}
+          {{{ t 'products.product_search.results_found_for' count=total keyword=keyword }}}
+          {{/if}}
+        {{/if}}
+      </span>
+    </nav>
+    {{/if}}
+    <header class="product-search__header">
+      <h2 class="product-search__headerTitle title2">{{ t 'products.product_search.search' }}</h2>
+    </header>
+    <section class="product-search__form">
+        {{ snippet 'header-search-bar' id='product-search' }}
+    </section>
+    <hr class="product-search__hr">
+    <div class="product-search__results">
+      <div class="product-search__header">
+        {{#if total '===' 1}}
+        <h2 class="product-search__headerTitle title2">{{ t 'products.product_search.single_results' count=total }}</h2>
+        {{else}}
+        <h2 class="product-search__headerTitle title2">{{ t 'products.product_search.ount_results' count=total }}</h2>
+        {{/if}}
+        {{#if total '===' 0}}
+          <p class="product-search__searchText">{{{ t 'products.product_search.search_no_results' keyword=keyword }}}</p>
+        {{/if}}
+      </div>
+    </div>
+    <div class="product-list-item-parent-controller row row-cols-{{ section.settings.md_cols }} row-cols-md-{{ section.settings.pc_cols }}">
+      {{#each product_search.list as | item |}}
+        {{#if item.object_type '===' 'product'}}
+          <div class="col product-item-list">
+            {{ snippet 'product/commons/product-item' spu=item index=@index className='__sl-custom-track-product-item-search' }}
+          </div>
+        {{/if}}
+        {{#if item.object_type '===' 'collection'}}
+          {{ snippet 'collection-card' item=item }}
+        {{/if}}
+        {{#if item.object_type '===' 'article'}}
+          {{ snippet 'article-card' item=item show_article_author=../section.settings.show_article_author show_article_date=../section.settings.show_article_date }}
+        {{/if}}
+        {{#if item.object_type '===' 'page'}}
+          {{ snippet 'page-card' item=item }}
+        {{/if}}
+        {{#if (isFalsey item.object_type)}}
+          <div class="col product-item-list">
+            {{ snippet 'product/commons/product-item' spu=item index=@index className='__sl-custom-track-product-item-search' }}
+          </div>
+        {{/if}}
+      {{/each}}
+    </div>
+    {{#if total '>' pageSize}}
+      {{ snippet 'product/commons/pagination' mode='href' id='pagination' total=total pageSize=pageSize current=pageNum request=request }}
+    {{/if}}
+  </div>
+</main>
+
+{{ snippet 'product/product-recommend' }}
+
+{{#schema}}
+{
+  "name": "t:sections.product_search_search-for-template.name",
+  "settings": [
+    {
+      "id": "pc_cols",
+      "type": "range",
+      "label": "t:sections.product_search_search-for-template.settings.pc_cols.label",
+      "min": 1,
+      "max": 5,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "id": "md_cols",
+      "type": "select",
+      "label": "t:sections.product_search_search-for-template.settings.md_cols.label",
+      "options": [
+        {
+          "value": 1,
+          "label": "t:sections.product_search_search-for-template.settings.md_cols.options__0.label"
+        },
+        {
+          "value": 2,
+          "label": "t:sections.product_search_search-for-template.settings.md_cols.options__1.label"
+        }
+      ],
+      "default": 2
+    },
+    {
+      "type": "group_header",
+      "label": "t:sections.product_search_search-for-template.settings.group_header__0.label"
+    },
+    {
+      "id": "product_image_ratio",
+      "type": "select",
+      "label": "t:sections.product_search_search-for-template.settings.product_image_ratio.label",
+      "options": [
+        {
+          "value": "0",
+          "label": "t:sections.product_search_search-for-template.settings.product_image_ratio.options__0.label"
+        },
+        {
+          "value": "100",
+          "label": "t:sections.product_search_search-for-template.settings.product_image_ratio.options__1.label"
+        },
+        {
+          "value": "133.33",
+          "label": "3:4"
+        },
+        {
+          "value": "75",
+          "label": "t:sections.product_search_search-for-template.settings.product_image_ratio.options__3.label"
+        },
+        {
+          "value": "150",
+          "label": "t:sections.product_search_search-for-template.settings.product_image_ratio.options__4.label"
+        }
+      ],
+      "default": "0"
+    },
+    {
+      "id": "product_fill_type",
+      "type": "select",
+      "label": "t:sections.product_search_search-for-template.settings.product_fill_type.label",
+      "options": [
+        {
+          "value": "contain",
+          "label": "t:sections.product_search_search-for-template.settings.product_fill_type.options__0.label"
+        },
+        {
+          "value": "cover",
+          "label": "t:sections.product_search_search-for-template.settings.product_fill_type.options__1.label"
+        }
+      ],
+      "default": "contain"
+    },
+    {
+      "id": "product_hover_show_next",
+      "type": "switch",
+      "label": "t:sections.product_search_search-for-template.settings.product_hover_show_next.label",
+      "default": false
+    },
+    {
+      "type": "group_header",
+      "label": "t:sections.product_search_search-for-template.settings.group_header__1.label"
+    },
+    {
+      "id": "show_article_author",
+      "type": "switch",
+      "label": "t:sections.product_search_search-for-template.settings.show_article_author.label",
+      "default": true
+    },
+    {
+      "id": "show_article_date",
+      "type": "switch",
+      "label": "t:sections.product_search_search-for-template.settings.show_article_date.label",
+      "default": true
+    }
+  ],
+  "default": {
+    "settings": {
+      "pc_cols": 4,
+      "md_cols": 2,
+      "display_type": "all",
+      "product_image_ratio": "0",
+      "product_fill_type": "contain",
+      "product_hover_show_next": false,
+      "show_article_author": true,
+      "show_article_date": true
+    }
+  }
+}
+{{/schema}}

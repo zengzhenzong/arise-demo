@@ -1,0 +1,22 @@
+{{#if (boolean status '==' 100)}}
+  
+  {{t 'order.payment.paying'}}
+{{else if (boolean status '==' 110)}}
+  
+  {{ t 'order.payment.authorized'}}
+{{else if (boolean status '==' 150)}}
+  
+  {{ t 'order.payment.partially_paid'}}
+{{else if (boolean status '==' 200)}}
+  
+  {{ t 'order.payment.paid'}}
+{{else if (boolean status '==' 650)}}
+  
+  {{ t 'order.payment.partially_refund'}}
+{{else if (boolean status '==' 700)}}
+  
+  {{ t 'order.payment.refund'}}
+{{else}}
+  
+  {{t 'order.payment.unpaid'}}
+{{/if}}

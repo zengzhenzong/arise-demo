@@ -1,0 +1,39 @@
+{{#if request.document_direction '===' 'rtl'}}
+  {{ combine_asset_tag 'product/commons/style/sku-trade/sku-trade-flatten.rtl.css' inline=true}}
+{{else}}
+  {{ combine_asset_tag 'product/commons/style/sku-trade/sku-trade-flatten.css' inline=true}}
+{{/if}}
+
+{{#if (length attr)}}
+<div style="{{ style }}" class="product-sku-trade-flatten shopline-element-sku-trade-flatten" data-ssr-plugin-sku id="{{ id }}" data-line-through="{{ line_through_style }}">
+  {{#each attr}}
+    {{#isFalsey hidden}}
+      <div class="spec-box {{ ../layout_direction }}" data-index="{{ @index }}"  data-ssr-plugin-sku-item data-sku-item-name="{{ specName }}" data-sku-tooltip-position="{{#if onlyShowAttrImg}}bottom{{else}}top{{/if}}">
+        <div class="spec-title" data-ssr-plugin-sku-item-name>
+         <div class="spec-name body3">{{ specName }}</div>
+        </div>
+        <div class="attr-box body3" data-ssr-sku-value-list>
+          {{#each specAttrList}}
+            {{#isTruthy imgUrl}}
+              <div class="attr-value {{ ../../sizes }} with-img {{#isTruthy active}}active{{/isTruthy}}" data-index="{{ @index }}" data-attr-value="{{ name }}">
+              
+                <img referrerpolicy="{{#if ../../imgNoReferrerSwitch}}same-origin{{/if}}"  class="value-img" src="{{ img_url imgUrl width=32 scale=4 }}" alt="{{ name }}">
+                {{#isFalsey ../onlyShowAttrImg}}
+                  <span class="value-text">{{ name }}</span>
+                {{else}}
+                  
+                  <span class="lineation"></span>
+                {{/isFalsey}}
+              </div>
+            {{else}}
+              <div class="attr-value {{ ../../sizes }} {{#isTruthy active}}active{{/isTruthy}}" data-index="{{ @index }}" data-attr-value="{{ name }}">
+                <span class="value-text">{{ name }}</span>
+              </div>
+            {{/isTruthy}}
+          {{/each}}
+        </div>
+      </div>
+    {{/isFalsey}}
+  {{/each}}
+</div>
+{{/if}}

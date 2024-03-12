@@ -1,0 +1,15 @@
+{{#if request.document_direction '===' 'rtl'}}
+  {{ combine_asset_tag 'commons/components/topDrawer/index.rtl.css' inline=true}}
+{{else}}
+  {{ combine_asset_tag 'commons/components/topDrawer/index.css' inline=true}}
+{{/if}}
+
+
+<div id="{{id}}" class="stage-top-drawer {{classes}} {{#if frameType '==' 'shadow'}}top-drawer__shadow{{/if}}">
+    <div class="top-drawer__mask"></div>
+    <div class="top-drawer__container">
+          {{ slot_content }}
+
+    </div>
+</div>
+

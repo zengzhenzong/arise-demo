@@ -1,0 +1,37 @@
+
+<div class="body3  product-sku-moq-price notranslate">{{#if selectSku.quantity_price_breaks.length}}{{t 'products.product_details.each_price' price=(money_exchange_convert_with_currency selectSku.price)}}{{/if}}</div>
+<div class="product-moq-quantity-rule body3">
+  {{#if selectSku.quantity_rule.increment '>' 1}}{{ t 'products.product_details.moq_increment'  num=selectSku.quantity_rule.increment  }}{{/if}}
+  {{#if selectSku.quantity_rule.min '>' 1}} • {{ t 'products.product_details.moq_minimum'  num=selectSku.quantity_rule.min  }}{{/if}}
+  {{#if selectSku.quantity_rule.max}} • {{ t 'products.product_details.moq_maximum'  num=selectSku.quantity_rule.max  }}{{/if}}
+</div>
+
+
+
+<div class="product-moq-grads-price body3 {{#not selectSku.quantity_price_breaks.length}}hide{{/not}}" >
+  <div class="product-moq-grads-price-title">{{t 'products.product_details.price_break_title'}}</div>
+  <div class="product-moq-grads-price-table">
+    <div class="product-moq-grads-price-row">
+      <div class="product-moq-grads-price-content">{{ t 'products.product_details.amount'  }}</div>
+      <div class="product-moq-grads-price-content">{{ t 'products.product_details.price'  }}</div>
+    </div>
+    <div class="product-moq-grads-price-row">
+      <div class="product-moq-grads-price-content">{{default selectSku.quantity_rule.min 1 }}+</div>
+      <div class="product-moq-grads-price-content">
+        {{assign 'priceVal' (append '<span class="body1 notranslate">' (money_exchange_convert_with_currency selectSku.price) '</span>')}}
+        {{{t 'products.product_details.table_each_price_ssr'  priceDom=priceVal }}}
+      </div>
+    </div>
+    {{#if selectSku.quantity_price_breaks.length}}
+      {{#each selectSku.quantity_price_breaks as |break|}}
+      <div class="product-moq-grads-price-row">
+        <div class="product-moq-grads-price-content">{{break.minimum_quantity}}+</div>
+        <div class="product-moq-grads-price-content">
+          {{assign 'priceVal' (append '<span class="body1 notranslate">' (money_exchange_convert_with_currency break.price) '</span>')}}
+          {{{t 'products.product_details.table_each_price_ssr'  priceDom=priceVal }}}
+        </div>
+      </div>
+      {{/each}}
+    {{/if}}
+  </div>
+</div>

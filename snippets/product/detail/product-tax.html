@@ -1,0 +1,6 @@
+{{assign 'taxesIncluded' tradeSettleConfig.taxesIncluded }}
+
+
+{{#if taxesIncluded}}
+<span class="product-tax {{#if bool}}product-tax-ml{{/if}}">({{ t 'products.product_details.tax_included' }})</span>
+{{/if}}

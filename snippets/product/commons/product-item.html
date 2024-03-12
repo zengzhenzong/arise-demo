@@ -1,0 +1,601 @@
+
+
+{{#unless notAllowLoadAssets}}
+  <!-- product/commons/js/product-item.js -->
+  {{#if request.document_direction '===' 'rtl'}}
+    {{ combine_asset_tag 'vendors/@yy_sl-theme-shared.min.rtl.css' inline=true }}
+    {{ combine_asset_tag 'vendors/swiper.min.rtl.css' inline=true }}
+    {{ combine_asset_tag 'vendors/@sl_cart.min.rtl.css' inline=true }}
+  {{else}}
+    {{ combine_asset_tag 'vendors/@yy_sl-theme-shared.min.css' inline=true }}
+    {{ combine_asset_tag 'vendors/swiper.min.css' inline=true }}
+    {{ combine_asset_tag 'vendors/@sl_cart.min.css' inline=true }}
+  {{/if}}
+  {{ combine_asset_tag 
+    'vendors/eventemitter3.min.js'
+    'vendors/uuid.min.js'
+    'vendors/lodash.min.js'
+    'vendors/@sl_currency-tools-core.min.js'
+    'vendors/@yy_sl-theme-shared.min.js'
+    'vendors/url.min.js'
+    'vendors/query-string.min.js'
+    'vendors/swiper.min.js'
+    'vendors/photoswipe.min.js'
+    'vendors/yt-player.min.js'
+    'vendors/scroll-lock.min.js'
+    'vendors/debug.min.js'
+    'vendors/axios.min.js'
+    'vendors/js-cookie.min.js'
+    'vendors/@sl_pay-button.min.js'
+    'vendors/@yy_sl-ec-tracker.min.js'
+    'vendors/@sl_cart.min.js'
+    'vendors/@funnyecho_hamon.min.js'
+    'vendors/@yy_sl-mc.min.js'
+    'vendors/querystring.min.js'
+    type="text/javascript"
+    defer=true
+  }}
+  {{ combine_asset_tag 
+    'theme-shared/utils/event-bus.js'
+    'theme-shared/utils/parsePathToArray.js'
+    'theme-shared/utils/state-selector.js'
+    'theme-shared/utils/report/page.js'
+    'theme-shared/utils/report/tool.js'
+    'theme-shared/report/common/baseReport.js'
+    'theme-shared/report/product/utils/index.js'
+    'theme-shared/utils/newCurrency/CurrencyConvert.js'
+    'theme-shared/utils/newCurrency/index.js'
+    'theme-shared/utils/currency/getCurrencyCode.js'
+    'theme-shared/report/stage/const.js'
+    'theme-shared/utils/syntax-patch.js'
+    'theme-shared/report/product/product-item.js'
+    'theme-shared/utils/i18n.js'
+    'theme-shared/utils/report/pageMapping.js'
+    'theme-shared/events/utils/api-logger.js'
+    'theme-shared/events/product/quickView-click/index.js'
+    'theme-shared/utils/img-size.js'
+    'theme-shared/components/hbs/productImages/js/product-photoSwipeHtml.js'
+    'theme-shared/components/hbs/shared/utils/imgUrl.js'
+    'theme-shared/components/hbs/shared/utils/getYouTubeCover.js'
+    'theme-shared/utils/lozad/util.js'
+    'theme-shared/utils/lozad/plugins/normal.js'
+    'theme-shared/utils/lozad/plugins/image-gif-poster.js'
+    'theme-shared/components/hbs/productImages/js/index.js'
+    'theme-shared/components/hbs/shared/utils/bem.js'
+    'theme-shared/components/hbs/shared/components/modal/common.js'
+    'theme-shared/components/hbs/shared/components/modal/lite.js'
+    'commons/components/modal/lite.js'
+    'theme-shared/components/hbs/shared/base/BaseClass.js'
+    'theme-shared/components/hbs/shared/components/modal/full.js'
+    'commons/components/modal/full.js'
+    'commons/components/modal/index.js'
+    'theme-shared/components/hbs/shared/components/toast/toast.js'
+    'commons/components/toast/toast.js'
+    'theme-shared/components/hbs/shared/components/toast/loading.js'
+    'commons/components/toast/loading.js'
+    'commons/components/toast/index.js'
+    'theme-shared/utils/sku/DataWatcher.js'
+    'theme-shared/events/product/sku-change/index.js'
+    'theme-shared/events/product/sku-changed/index.js'
+    'theme-shared/events/product/preview-init/index.js'
+    'theme-shared/components/hbs/shared/components/toast/index.js'
+    'theme-shared/components/hbs/flashSale/index.js'
+    'product/commons/js/sku-stepper.js'
+    'commons/utils/convertPrice.js'
+    'product/detail/js/product-quantity.js'
+    'theme-shared/utils/get-env.js'
+    'theme-shared/utils/createLogger.js'
+    'theme-shared/utils/request.js'
+    'theme-shared/utils/retryRequest.js'
+    'theme-shared/utils/url-adaptor.js'
+    'theme-shared/utils/report/const.js'
+    'theme-shared/utils/dataReport/tool.js'
+    'theme-shared/utils/dataReport/ga.js'
+    'theme-shared/utils/dataReport/gad.js'
+    'theme-shared/utils/dataReport/fb.js'
+    'theme-shared/utils/tradeReport/index.js'
+    'theme-shared/components/smart-payment/constants.js'
+    'theme-shared/const/preload-state-fields.js'
+    'theme-shared/components/smart-payment/utils.js'
+    'theme-shared/utils/tradeReport/const.js'
+    'theme-shared/utils/dataAccessor.js'
+    'theme-shared/utils/url.js'
+    'theme-shared/utils/constant.js'
+    'theme-shared/utils/checkout.js'
+    'theme-shared/components/hbs/products/checkedEvent/index.js'
+    'theme-shared/components/smart-payment/services.js'
+    'theme-shared/components/smart-payment/reporter/constants.js'
+    'theme-shared/components/smart-payment/reporter/CheckoutHiidoReportV2.js'
+    'theme-shared/components/smart-payment/reporter/ThirdPartReport.js'
+    'theme-shared/components/locales/index.js'
+    'theme-shared/components/smart-payment/index.js'
+    'theme-shared/components/payment-button/constants.js'
+    'theme-shared/components/payment-button/utils.js'
+    'theme-shared/components/payment-button/express_checkout.js'
+    'theme-shared/components/smart-payment/payments.js'
+    'theme-shared/events/product/paypal-fallback/index.js'
+    'theme-shared/components/pay-button/constants.js'
+    'theme-shared/components/pay-button/utils.js'
+    'theme-shared/components/pay-button/payment-button/utils.js'
+    'theme-shared/components/pay-button/payment-button/constants.js'
+    'theme-shared/components/pay-button/payment-button/index.js'
+    'theme-shared/events/trade/interior-event/index.js'
+    'theme-shared/events/trade/enum/index.js'
+    'theme-shared/events/trade/developer-api/cart-sidebar-render/index.js'
+    'theme-shared/utils/tradeReport/hdReportV2.js'
+    'theme-shared/utils/tradeReport/eventListen.js'
+    'theme-shared/components/hbs/shared/components/topDrawer/const.js'
+    'theme-shared/components/hbs/shared/components/drawer/const.js'
+    'commons/logger/index.js'
+    'commons/utils/isMobile.js'
+    'commons/utils/throttle.js'
+    'commons/utils/main.js'
+    'commons/utils/helper.js'
+    'commons/utils/index.js'
+    'cart/script/biz/sticky-cart/helper.js'
+    'cart/script/report/cartReport.js'
+    'cart/script/biz/sticky-cart/index.js'
+    'cart/script/domain/adapter/svc/internal/config.js'
+    'cart/script/domain/adapter/svc/internal/transport.js'
+    'cart/script/domain/adapter/svc/index.js'
+    'cart/script/domain/adapter/storage/constant.js'
+    'cart/script/domain/adapter/storage/index.js'
+    'cart/script/utils/event-bus/index.js'
+    'cart/script/domain/adapter/svc/internal/constant.js'
+    'cart/script/domain/adapter/svc/cart.js'
+    'cart/script/domain/adapter/svc/voucher.js'
+    'cart/script/domain/adapter/svc/coupon.js'
+    'cart/script/domain/model/helpers.js'
+    'cart/script/domain/adapter/svc/order.js'
+    'cart/script/constant/responseCode.js'
+    'cart/script/constant/cartQuantity.js'
+    'cart/script/domain/model/cart.js'
+    'cart/script/constant/stockType.js'
+    'cart/script/domain/vo/productStock.js'
+    'cart/script/constant/priceType.js'
+    'cart/script/domain/vo/productPriceType.js'
+    'cart/script/utils/object.js'
+    'cart/script/domain/model/cartItem.js'
+    'cart/script/domain/vo/responseCode.js'
+    'cart/script/domain/model/response.js'
+    'cart/script/domain/model/promotionCode.js'
+    'theme-shared/biz-com/trade/optimize-modal/constant.js'
+    'theme-shared/biz-com/trade/optimize-modal/cartChangeItem.js'
+    'cart/script/domain/vo/productVerifyType.js'
+    'cart/script/domain/model/cartVerifyItem.js'
+    'cart/script/service/cart/hooks.js'
+    'cart/script/service/cart/service.js'
+    'cart/script/service/cart/index.js'
+    'cart/script/service/index.js'
+    'commons/utils/dynamicImportMiniCart.js'
+    'commons/cart/errorCode.js'
+    'commons/cart/handleAddToCartErrorCodeToast.js'
+    'commons/cart/globalEvent.js'
+    'commons/utils/debounce.js'
+    'theme-shared/components/payment-button/shopby_fast_checkout.js'
+    'theme-shared/components/payment-button/index.js'
+    'product/detail/js/payment_button.js'
+    'theme-shared/report/product/add-to-cart.js'
+    'product/detail/js/product-button-report.js'
+    'product/detail/js/float-button.js'
+    'product/detail/js/product-button.js'
+    'product/commons/js/product-info.js'
+    'product/detail/js/product-swiper.js'
+    'product/detail/js/layout.js'
+    'product/utils/sku/skuUtil.js'
+    'product/utils/sku/skuFilter.js'
+    'product/commons/js/sku-trade/base-sku-trade.js'
+    'product/commons/js/sku-trade/sku-trade-flatten.js'
+    'theme-shared/components/hbs/productImages/js/modal.js'
+    'commons/components/modal/common.js'
+    'product/commons/js/sku-trade/sku-trade-select.js'
+    'product/detail/js/sku-trade.js'
+    'theme-shared/utils/form/form.js'
+    'theme-shared/utils/form/index.js'
+    'theme-shared/utils/sku/firstAvailableSku.js'
+    'theme-shared/report/customArgs/index.js'
+    'theme-shared/report/product/detail/inquiry-modal-report.js'
+    'commons/base/BaseClass.js'
+    'product/detail/inquiry-price-modal.js'
+    'product/commons/js/createShadowDom.js'
+    'product/detail/js/tabs.js'
+    'product/detail/js/product-collapse.js'
+    'theme-shared/components/hbs/thirdPartyShare/js/index.js'
+    'commons/thirdPartyShare/index.js'
+    'commons/utils/url.js'
+    'theme-shared/report/product/product-preview.js'
+    'product/utils/nullishCoalescingOperator.js'
+    'product/detail/js/product-preview.js'
+    'product/commons/js/preview-modal/preview-modal.js'
+    'product/commons/js/preview-modal/index.js'
+    'theme-shared/report/product/product-quickAddCart.js'
+    'product/commons/js/quick-add-modal.js'
+    'product/commons/js/product-item.js'
+    type="text/javascript"
+    defer=true
+  }}
+
+  {{#if request.document_direction '===' 'rtl'}}
+  {{ combine_asset_tag 'product/commons/style/product-item.rtl.css' inline=true}}
+{{else}}
+  {{ combine_asset_tag 'product/commons/style/product-item.css' inline=true}}
+{{/if}}
+{{/unless}}
+
+{{#if spu.spuSeq}}
+ {{ assign 'spuSeq' spu.spuSeq }}
+{{else}}
+ {{ assign 'spuSeq' spu.productId }}
+{{/if}}
+{{ assign 'soldOut' spu.soldOut }}
+{{ assign 'title' spu.title }}
+{{ assign 'subTitle' spu.subTitle }}
+{{ assign 'subTitleShowType' (default subTitleShowType 'hide') }}
+{{ assign 'productMinPrice' spu.productMinPrice }}
+{{ assign 'productMaxPrice' spu.productMaxPrice }}
+{{ assign 'showMemberMark' spu.showMemberMark }}
+{{ assign 'showFromMark' spu.showFromMark }}
+
+{{ assign 'showSuffixFrom' (inArray (JSONparse '["ko", "ja", "zh-hans-cn", "zh-hant-tw"]') request.locale) }}
+{{ assign 'uniqueKey' spu.uniqueKey }}
+{{ assign 'inquiry' spu.inquiry }}
+{{ assign 'originPrice' spu.originPrice }}
+{{ assign 'spuCommentSummary' spu.spuCommentSummary }}
+{{ assign 'customCategoryName' spu.customCategoryName }}
+{{ assign 'quantity_price_breaks_configured' spu.quantity_price_breaks_configured }}
+
+{{ assign 'hoverZIndex' (default hoverZIndex 1) }}
+{{ assign 'noHoverAniEffect' (default noHoverAniEffect false) }}
+{{ assign 'showOrginPrice' (default section.settings.show_orgin_price true) }}
+{{ assign 'priceShowType' (default section.settings.price_show_type 'from_lowest_price') }}
+
+{{ assign 'finalRatio' (default imageRatio section.settings.product_image_ratio) }}
+{{ assign 'imageFit' (default imageFit section.settings.product_fill_type) }}
+
+{{ assign 'description' (cond subTitle subTitle (cond description description '')) }}
+{{ assign 'description' (cond (lt description.length 150) description (append (array-slice description 0 150) '...')) }}
+
+
+{{#if featured_image}}
+
+  {{#if finalRatio '===' '0'}}
+    {{ assign 'finalRatio' (append (default (get 'ratio' (img_size featured_image.src)) 0) '') }}
+  {{/if}}
+
+  {{ assign 'product_item_image_src' featured_image.src }}
+  {{ assign 'product_item_image_alt' (default featured_image.alt '') }}
+
+
+{{else}}
+  
+  {{#if imageList.[0]}}
+
+    {{#if finalRatio '===' '0'}}
+      {{ assign 'finalRatio' (append (default (get 'ratio' (img_size imageList.[0])) 0) '') }}
+    {{/if}}
+
+    {{ assign 'product_item_image_src' imageList.[0] }}
+    {{ assign 'product_item_image_alt' (default altList.[0] '') }}
+
+  {{else}}
+
+    {{ assign 'product_item_image_src' false }}
+  {{/if}}
+{{/if}}
+
+
+{{#if imageList.[1]}}
+  {{ assign 'product_item_next_image_src' imageList.[1] }}
+  {{ assign 'product_item_next_image_alt' (default altList.[1] '') }}
+{{else}}
+  {{ assign 'product_item_next_image_src' false }}
+{{/if}}
+
+{{ assign 'discount_text' null }}
+{{ assign 'isImageRounded' (isTruthy (isTruthy theme.settings.edges '===' 'rounded') '&&' (isTruthy theme.settings.product_grid_image_margin '===' '0')) }}
+
+{{#if originPrice}}
+  {{#if theme.settings.product_discount_style '===' 'number'}}
+    {{ assign 'discount_text' (subtract originPrice productMinPrice) }}
+  {{else}}
+    {{ assign 'discount_text' (round (multiply (subtract 1 (divide productMinPrice originPrice)) 100)) }}
+  {{/if}}
+{{/if}}
+{{ assign 'recommendConfig' plugins.recommend.recommendConfig }}
+
+{{ assign 'showPrice' true }}
+{{ assign 'product_mobile_quick_add_button_style' theme.settings.product_mobile_quick_add_button_style }}
+{{#if itemType '===' 'recommend'}}
+  {{ assign 'soldOut' false }}
+  {{ assign 'showPrice' recommendConfig.showPrice }}
+  {{ assign 'product_mobile_title_show' recommendConfig.showProductTitleOnMobile }}
+  {{#if (boolean (boolean recommendType '===' 'miniCart') '||' (boolean recommendType '===' 'cart'))}}
+    {{ assign 'product_quick_view' false }}
+    {{ assign 'product_add_to_cart' false }}
+  {{else}}
+    {{ assign 'product_quick_view' recommendConfig.showAddToCard }}
+    {{ assign 'product_add_to_cart' recommendConfig.showAddToCard }}
+  {{/if}}
+  {{#if recommendConfig.pcProductTitleLine '===' 1}}
+    {{ assign 'product_title_show_type' 'display_up_to_1_rows' }}
+  {{else}}{{#if recommendConfig.pcProductTitleLine '===' 2}}
+    {{ assign 'product_title_show_type' 'display_up_to_2_rows' }}
+  {{/if}}{{/if}}
+{{else}}
+  {{ assign 'product_mobile_title_show' theme.settings.product_mobile_title_show }}
+  {{ assign 'product_quick_view' theme.settings.product_quick_view }}
+  {{ assign 'product_add_to_cart' theme.settings.product_add_to_cart }}
+  {{ assign 'product_title_show_type' theme.settings.product_title_show_type }}
+{{/if}}
+
+{{ assign 'product_add_to_cart_pc_position' theme.settings.product_add_to_cart_pc_position }}
+{{ assign 'enabled_mobile_product_add_to_cart' theme.settings.enabled_mobile_product_add_to_cart }}
+
+<div class="product-item__wrapper shopline-element-product-item product-item__{{ product_mobile_quick_add_button_style }}-style" {{{ shopline_attributes }}}>
+  <div class="product-item__inner-wrap {{#if product_add_to_cart_pc_position '===' 'center'}}js-product-inner-wrap{{/if}}" data-hover-z-index="{{ hoverZIndex }}" data-no-hover-ani-effect="{{ noHoverAniEffect }}">
+    {{#if (isFalsey inquiry)}}
+      {{#and (isFalsey forbiddenBtn) (if product_mobile_quick_add_button_style 'icon')}}
+        <div class="product-item__actions--mobile">
+          {{#if product_quick_view}}
+            <a
+            data-query="{{ previewQuery }}"
+            data-spu-seq='{{ spuSeq }}'
+            data-unique-key='{{ uniqueKey }}'
+            data-index="{{ index }}"
+            data-status="{{ soldOut }}"
+            data-selected-sku="{{ selectedSkuId }}"
+            class="product-item__mobile-btn-icon product-item__btn product-item__mobile-quick-view js-product-item-quick-view" href="javascript:;">
+              {{ snippet 'icons/icon_quick_view' }}
+            </a>
+          {{/if}}
+          {{#and product_add_to_cart (isFalsey soldOut) enabled_mobile_product_add_to_cart}}
+            <a
+            data-query="{{ previewQuery }}"
+            data-spu-seq='{{ spuSeq }}'
+            data-unique-key='{{ uniqueKey }}'
+            data-index="{{ index }}"
+            data-status="{{ soldOut }}"
+            data-selected-sku="{{ selectedSkuId }}"
+            class="product-item__mobile-btn-icon product-item__btn product-item__mobile-quick-add js-product-item-quick-add" href="javascript:;">
+              {{ snippet 'icons/icon_quick_add' }}
+            </a>
+          {{/and}}
+        </div>
+      {{/and}}
+    {{/if}}
+    <a
+      data-id="{{ spuSeq }}"
+      data-sku-id="{{ reportSkuId }}"
+      data-index="{{ index }}"
+      data-status="{{ soldOut }}"
+      data-name="{{ title }}"
+      data-custom-category-name="{{ customCategoryName }}"
+      data-price="{{ productMinPrice }}"
+      data-module-type="{{ moduleType }}"
+      class="product-item js-product-item {{ className }} __sl-custom-track-product-item-{{ spuSeq }}"
+      href="{{#if (isFalsey uniqueKey)}}javascript:;{{else}}{{ redirect_to (append '/products/' uniqueKey (cond selectedSkuId (append '?sku=' selectedSkuId) '')) }}{{/if}}"
+      class="col"
+      data-plugin-product-item-a
+    >
+      <div class="product-item-image-wrapper {{#if isImageRounded}}rounded{{/if}}">
+        <div class="product-item__image-content">
+
+          {{#if (boolean product_item_next_image_src '&&' section.settings.product_hover_show_next)}}
+            <div class="product-item-next-image"  data-plugin-product-item-next-img-box>
+              {{ snippet 'product/commons/product-process-image' closeLazy=false backgroundColor=backgroundColor fallbacksBgColor='#f3f3f3' imageRatio=finalRatio imageFit=imageFit src=product_item_next_image_src alt=product_item_next_image_alt placeholderHeight=placeholderHeight }}
+            </div>
+          {{/if}}
+          <div class="product-item-image"  data-plugin-product-item-img-box>
+            {{ snippet 'product/commons/product-process-image' backgroundColor=backgroundColor fallbacksBgColor='#f3f3f3' imageRatio=finalRatio imageFit=imageFit src=product_item_image_src alt=product_item_image_alt placeholderHeight=placeholderHeight closeLazy=closeLazy piSize=pcSize mSize=mSize }}
+          </div>
+
+          {{#if soldOut '!==' undefined}}
+
+            {{#if (isFalsey inquiry)}}
+            <div class="product-item-card-wrapper cart-position-{{ theme.settings.product_discount_position }}">
+              <div class="product-item-card-content">
+                {{#if soldOut}}
+                  <span class="product-item-soldout-tag body4 product-item-hidden-in-grid">{{ t 'products.product_list.sold_out' }}</span>
+                {{else}}
+                  {{#if (boolean theme.settings.product_discount '&&' showPrice)}}
+
+                    {{#if (boolean originPrice '&&' (boolean discount_text '>' 0))}}
+                      <span class="product-item-sale-tag body4 product-item-hidden-in-grid">
+                        {{#if theme.settings.product_discount_tag_style '===' 'sale'}}
+                          {{{ t 'products.product_list.sale' }}}
+                        {{else}}
+                          {{#if theme.settings.product_discount_style '===' 'number'}}
+                            {{ assign 'priceVal' (money_exchange_convert_with_currency discount_text) }}
+                            {{{ t 'products.product_list.save' priceDom=(append '<span class="notranslate isolate"  data-product-item-price="' discount_text '" data-product-item-save-price="true">' priceVal '</span>') }}}
+                          {{else}}
+                            {{ t 'products.product_list.save_ratio' price=discount_text }}
+                          {{/if}}
+                        {{/if}}
+                      </span>
+                    {{/if}}
+                  {{/if}}
+                {{/if}}
+              </div>
+            </div>
+            {{/if}}
+          {{/if}}
+        </div>
+        {{#if product_add_to_cart_pc_position '===' 'center'}}
+        <div class="product-item__actions js-product-item__actions">
+          {{#if (boolean (isFalsey forbiddenBtn) '&&' (isFalsey inquiry))}}
+
+            {{#if product_quick_view}}
+              <button
+                type="button"
+                data-query="{{ previewQuery }}"
+                data-spu-seq='{{ spuSeq }}'
+                data-unique-key='{{ uniqueKey }}'
+                data-index="{{ index }}"
+                data-status="{{ soldOut }}"
+                data-selected-sku="{{ selectedSkuId }}"
+                class="btn product-item__btn product-item__quick-view js-product-item-quick-view">
+                  {{ t 'products.product_list.quick_shop' }}
+              </button>
+            {{/if}}
+
+            {{#if (boolean product_add_to_cart '&&' (isFalsey soldOut))}}
+              <button
+                type="button"
+                data-query="{{ previewQuery }}"
+                data-spu-seq='{{ spuSeq }}'
+                data-unique-key='{{ uniqueKey }}'
+                data-index="{{ index }}"
+                data-selected-sku="{{ selectedSkuId }}"
+                class="btn btn-primary product-item__btn product-item__quick-add js-product-item-quick-add">
+                <span>
+                  {{ t 'products.product_list.add_to_cart' }}
+                </span>
+                <i>&nbsp;</i>
+              </button>
+            {{/if}}
+          {{/if}}
+        </div>
+        {{/if}}
+      </div>
+
+      <div class="product-item-info">
+        <div class="product-item-title-wrapper">
+          <div data-ssr-product-item-bottom></div>
+          <h3 class="product-item-title product-grid-font body3 text-{{ theme.settings.product_card_content_align }} {{#if product_title_show_type '===' 'display_up_to_1_rows'}}display-1-row{{/if}}{{#if product_title_show_type '===' 'display_up_to_2_rows'}}display-2-row{{/if}} {{#if (isFalsey product_mobile_title_show)}}mobile-hide{{/if}}">
+            {{ title }}
+          </h3>
+          {{#if subTitleShowType '!==' 'hide'}}
+            <div class="product-item-sub-title {{ subTitleShowType }}">{{ subTitle }}</div>
+          {{/if}}
+          {{#if description}}
+            <div class="product-item-description product-grid-font body3">
+              {{ description }}
+            </div>
+          {{/if}}
+        </div>
+        <div data-ssr-product-item-price-top></div>
+
+        {{#if (boolean (isFalsey inquiry) '&&' showPrice)}}
+          <div class="product-item-price text-{{ theme.settings.product_card_content_align }}">
+
+            {{#if (boolean originPrice '&&' (boolean originPrice '>' productMinPrice) '&&' showOrginPrice)}}
+              <span data-product-item-price="{{ originPrice }}" class="product-item-origin-price body4 isolate notranslate product-item-hidden-in-list">{{ money_exchange_convert_with_currency originPrice }}</span>
+            {{/if}}
+            <span class="product-item-sale-price body3 {{#not quantity_price_breaks_configured}}{{#if (boolean originPrice '&&' (boolean originPrice '>' productMinPrice))}}product-item-sale-price--discount{{/if}}{{/not}}">
+              {{#if quantity_price_breaks_configured}}
+                <span class="isolate">
+                  <span data-product-item-price="{{ productMinPrice }}" class="isolate notranslate">{{ money_exchange_convert_with_currency productMinPrice }}</span>
+                  {{#if productMinPrice '!==' productMaxPrice}}
+                    <span>-</span>
+                    <span data-product-item-price="{{ productMaxPrice }}" class="isolate notranslate">{{ money_exchange_convert_with_currency productMaxPrice }}</span>
+                  {{/if}}
+                </span>
+                <div class="body4">{{ t 'products.product_list.price_break_tag' }}</div>
+              {{else}}
+                {{#if (boolean showFromMark '&&' (not showSuffixFrom) '&&' priceShowType '===' 'from_lowest_price')}}
+                  {{ t 'products.product_list.from_price_html' price='' }}
+                {{/if}}
+                {{#if priceShowType '===' 'from_lowest_price'}}
+                  <span data-product-item-price="{{ productMinPrice }}" class="isolate notranslate">{{ money_exchange_convert_with_currency productMinPrice }}</span>
+                {{/if}}
+                {{#if priceShowType '===' 'lowest_price'}}
+                  <span data-product-item-price="{{ productMinPrice }}" class="isolate notranslate">{{ money_exchange_convert_with_currency productMinPrice }}</span>
+                {{/if}}
+                {{#if priceShowType '===' 'price_interval'}}
+                  <span data-product-item-price="{{ productMinPrice }}" class="isolate notranslate">{{ money_exchange_convert_with_currency productMinPrice }}</span>
+                  {{#if productMinPrice '!==' productMaxPrice}}
+                    <span>-</span>
+                    <span data-product-item-price="{{ productMaxPrice }}" class="isolate notranslate">{{ money_exchange_convert_with_currency productMaxPrice }}</span>
+                  {{/if}}
+                {{/if}}
+                {{#if (boolean showFromMark '&&' showSuffixFrom '&&' priceShowType '===' 'from_lowest_price')}}
+                  {{ t 'products.product_list.from_price_html' price='' }}
+                {{/if}}
+              {{/if}}
+            </span>
+            {{#if showMemberMark}}
+            <span class="product-item-vip-price" data-vip-tag="small"></span>
+            {{/if}}
+
+            {{#if (boolean originPrice '&&' (boolean originPrice '>' productMinPrice) '&&' showOrginPrice)}}
+              <span data-product-item-price="{{ originPrice }}" class="product-item-origin-price body4 isolate notranslate product-item-hidden-in-grid">{{ money_exchange_convert_with_currency originPrice }}</span>
+            {{/if}}
+            {{#if theme.settings.product_discount}}
+              {{#if soldOut '!==' undefined}}
+
+                {{#if (isFalsey inquiry)}}
+                  {{#if soldOut}}
+                    <span class="product-item-hidden-in-list product-item-tag-panel">
+                      <span class="product-item-soldout-tag body4" style="position: static;">{{ t 'products.product_list.sold_out' }}</span>
+                    </span>
+                  {{else}}
+
+                    {{#if (boolean showPrice '&&' originPrice '&&' (boolean discount_text '>' 0))}}
+                      {{#if theme.settings.product_discount_tag_style '===' 'sale'}}
+                        <span class="product-item-save-price">
+                          {{#if theme.settings.product_discount_style '===' 'number'}}
+                            {{ assign 'priceVal' (money_exchange_convert_with_currency discount_text) }}
+                            {{{ t 'products.product_list.save' priceDom=(append '<span class="notranslate isolate"  data-product-item-price="' discount_text '" data-product-item-save-price="true">' priceVal '</span>') }}}
+                          {{else}}
+                            {{ t 'products.product_list.save_ratio' price=discount_text }}
+                          {{/if}}
+                        </span>
+                      {{else}}
+                        <span class="product-item-hidden-in-list product-item-tag-panel">
+                          <span class="product-item-sale-tag body4" style="position: static;">
+                            {{#if theme.settings.product_discount_style '===' 'number'}}
+                              {{ assign 'priceVal' (money_exchange_convert_with_currency discount_text) }}
+                              {{{ t 'products.product_list.save' priceDom=(append '<span class="notranslate isolate"  data-product-item-price="' discount_text '" data-product-item-save-price="true">' priceVal '</span>') }}}
+                            {{else}}
+                              {{ t 'products.product_list.save_ratio' price=discount_text }}
+                            {{/if}}
+                          </span>
+                        </span>
+                      {{/if}}
+                    {{/if}}
+                  {{/if}}
+                {{/if}}
+              {{/if}}
+            {{/if}}
+
+          </div>
+        {{/if}}
+        <div data-ssr-product-item-price-bottom></div>
+      </div>
+    </a>
+    <div class="product-item-button-group-under{{#if enabled_mobile_product_add_to_cart}} is-show-quick-add-mobile{{/if}}{{#if product_add_to_cart_pc_position '===' 'under'}} is-show-quick-add-pc{{/if}}">
+      {{#if (boolean (isFalsey forbiddenBtn) '&&' (isFalsey inquiry))}}
+
+        {{#if product_quick_view}}
+          <button
+            type="button"
+            data-query="{{ previewQuery }}"
+            data-spu-seq='{{ spuSeq }}'
+            data-unique-key='{{ uniqueKey }}'
+            data-index="{{ index }}"
+            data-status="{{ soldOut }}"
+            data-selected-sku="{{ selectedSkuId }}"
+            class="btn product-item__btn product-item__quick-view js-product-item-quick-view">
+              {{ t 'products.product_list.quick_shop' }}
+          </button>
+        {{/if}}
+
+        {{#if product_add_to_cart}}
+          <button
+            type="button"
+            data-query="{{ previewQuery }}"
+            data-spu-seq='{{ spuSeq }}'
+            data-unique-key='{{ uniqueKey }}'
+            data-index="{{ index }}"
+            data-selected-sku="{{ selectedSkuId }}"
+            class="btn btn-primary product-item__btn product-item__quick-add js-product-item-quick-add {{#unless (isFalsey soldOut)}}disabled{{/unless}}">
+            <span>
+              {{ t 'products.product_list.add_to_cart' }}
+            </span>
+            <i>&nbsp;</i>
+          </button>
+        {{/if}}
+      {{/if}}
+    </div>
+  </div>
+</div>

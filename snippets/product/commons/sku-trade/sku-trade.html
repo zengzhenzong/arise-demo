@@ -1,0 +1,10 @@
+{{#if (isFalsey isHideSkuSelector)}}
+  <div data-ssr-plugin-sku-seat>
+    {{#if productSkuStyle 'flatten'}}
+      {{ snippet 'product/commons/sku-trade/flatten' layout_direction=layout_direction sizes=sizes attr=attr id=(append 'product-detail-sku-trade_' id) line_through_style=line_through_style}}
+    {{else}}
+      {{ snippet 'product/commons/sku-trade/select' layout_direction=layout_direction sizes=sizes attr=attr id=(append 'product-detail-sku-trade_' id) }}
+    {{/if}}
+  </div>
+{{/if}}
+<div id="product-sku-trade-data_{{id}}" data-selectsku="{{selectSkuSeq}}" data-skustyle="{{productSkuStyle}}" style="display: none;"></div>

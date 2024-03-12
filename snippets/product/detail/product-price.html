@@ -1,0 +1,85 @@
+{{assign 'comment' product.productComment }}
+{{assign 'spuInfo' product.spu }}
+{{assign 'productSale' product.productSale }}
+{{assign 'salesPlugins' product.productSale.saleActivities }}
+
+{{assign 'discount_text' null}}
+
+{{#if productPrice.originPrice}}
+  {{#if theme.settings.product_discount_style '===' 'number'}}
+    {{assign 'discount_text' (subtract productPrice.originPrice productPrice.salesPrice)}}
+  {{else}}
+    {{assign 'discount_text' (round (multiply (subtract 1 (divide productPrice.salesPrice productPrice.originPrice)) 100))}}
+  {{/if}}
+{{/if}}
+
+{{!-- 这个配置只有pdp用到 --}}
+{{#and (if id '===' 'productDetail') settings.font_size_flexible}}
+  <style>
+    #product-info_{{id}} .product-sales-price {
+      font-size: {{settings.sale_price_pc_font_size}}px;
+    }
+    @media screen and (max-width: 959px) {
+      #product-info_{{id}} .product-sales-price  {
+        font-size: {{settings.sale_price_mobile_font_size}}px;
+      }
+    }
+    #product-info_{{id}} .product-origin-price {
+      font-size: {{settings.regular_price_pc_font_size}}px;
+    }
+    @media screen and (max-width: 959px) {
+      #product-info_{{id}} .product-origin-price  {
+        font-size: {{settings.regular_price_mobile_font_size}}px;
+      }
+    }
+  </style>
+{{/and}}
+
+<div class="product-price" id="product-info_{{id}}">
+
+  {{#not product.spu.inquiry}}
+    <div class="price shopline-element-price price_{{settings.show_order}}  product-info-price_{{id}} {{#if productPrice.originPrice '>' productPrice.salesPrice}}{{#not selectSku.quantity_price_breaks.length}}product-info-price_hasDiscount{{/not}}{{/if}}" product_discount={{theme.settings.product_discount}}>
+      {{#if (boolean selectSku.quantity_price_breaks.length) }}
+        <div class="body4 product-price-discount discount product-price-discount_{{id}} hide" product_discount_style={{theme.settings.product_discount_style}}></div>
+        {{ assign "last_break" (last selectSku.quantity_price_breaks)}}
+        <div class="body1 product-sales-price-wrapper">
+          <span class="body1 product-sales-price {{#if settings.sell_font_bold}}fw-bold{{/if}} {{#unless settings.font_size_flexible}}{{settings.sell_font_size}}{{/unless}} product-price-sales_{{id}} isolate notranslate">{{ money_exchange_convert_with_currency last_break.price }} - {{ money_exchange_convert_with_currency productPrice.salesPrice }}</span>
+        </div>
+        <span class="product-price-vip_{{id}} vipPrice hide" data-vip-tag="big"></span>
+        <div class="body2 product-origin-price-wrapper">
+          <div class="body2 product-origin-price  {{#unless settings.font_size_flexible}}{{settings.origin_font_size}}{{/unless}} originPrice isolate notranslate product-price-origin_{{id}} hide"></div>
+        </div>
+      {{else }}
+        {{#if theme.settings.product_discount}}
+          <span
+            class="body4 product-price-discount discount product-price-discount_{{id}} {{#or (boolean productPrice.originPrice '<=' productPrice.salesPrice) spuInfo.soldOut (boolean discount_text '<=' 0)}}hide{{/or}}"
+            product_discount_style={{theme.settings.product_discount_style}}>
+            {{#if (and (and (is (typeOf productPrice.originPrice) 'number') (is (typeOf productPrice.salesPrice) 'number')) discount_text)}}
+              {{#if theme.settings.product_discount_style '===' 'number'}}
+                {{{t 'products.product_list.save'  priceDom=(append '<span class="isolate notranslate">' (money_exchange_convert_with_currency discount_text) '</span>')}}}
+              {{else}}
+                {{{t 'products.product_list.save'  priceDom=(append '<span class="notranslate">' discount_text '% ' '</span>')}}}
+              {{/if}}
+            {{/if}}
+          </span>
+        {{/if}}
+        <div class="body1 product-sales-price-wrapper">
+          <span class="body1 product-sales-price {{#if settings.sell_font_bold}}fw-bold{{/if}} {{#unless settings.font_size_flexible}}{{settings.sell_font_size}}{{/unless}} product-price-sales_{{id}} isolate notranslate">{{ money_exchange_convert_with_currency productPrice.salesPrice }}</span>
+        </div>
+        <span class="product-price-vip_{{id}} vipPrice {{cond showMemberMark '' 'hide'}}" data-vip-tag="big"></span>
+
+        <div class="body2 product-origin-price-wrapper">
+          <span class="body2 product-origin-price {{#unless settings.font_size_flexible}}{{settings.origin_font_size}}{{/unless}} originPrice isolate notranslate product-price-origin_{{id}} {{#if productPrice.originPrice '<=' productPrice.salesPrice}}hide{{/if}}">{{ money_exchange_convert_with_currency productPrice.originPrice }}</span>
+        </div>
+      {{/if}}
+    </div>
+
+    <div class="product-info-tax body6">
+      {{ snippet 'product/detail/product-tax' bool=true }}
+    </div>
+  {{/not}}
+
+
+  {{ snippet 'product/detail/product-info-promotions'}}
+</div>
+<div data-ssr-plugin-title-top></div>

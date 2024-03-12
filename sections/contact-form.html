@@ -1,0 +1,127 @@
+{{ assign 'prefix' 'stage-custom-page--form' }}
+
+{{#if request.document_direction '===' 'rtl'}}
+  {{ combine_asset_tag 'stage/contact-form/index.rtl.css' inline=true}}
+{{else}}
+  {{ combine_asset_tag 'stage/contact-form/index.css' inline=true}}
+{{/if}}
+<!-- stage/contact-form/index.js -->
+  {{ combine_asset_tag 
+    'vendors/eventemitter3.min.js'
+    'vendors/axios.min.js'
+    'vendors/query-string.min.js'
+    'vendors/lodash.min.js'
+    type="text/javascript"
+    defer=true
+  }}
+  {{ combine_asset_tag 
+    'theme-shared/utils/event-bus.js'
+    'theme-shared/utils/form/form.js'
+    'theme-shared/utils/form/index.js'
+    'theme-shared/utils/request.js'
+    'theme-shared/utils/syntax-patch.js'
+    'theme-shared/utils/i18n.js'
+    'theme-shared/utils/emailReg.js'
+    'theme-shared/utils/sectionsLoad/index.js'
+    'theme-shared/components/hbs/shared/components/toast/toast.js'
+    'commons/components/toast/toast.js'
+    'theme-shared/components/hbs/shared/components/toast/loading.js'
+    'commons/components/toast/loading.js'
+    'commons/components/toast/index.js'
+    'stage/contact-form/index.js'
+    type="text/javascript"
+    defer=true
+  }}
+
+
+{{ assign 'textColor' theme.settings.color_text }}
+{{#if section.settings.color_scheme '!==' 'none'}}
+  {{ assign 'textColor' (get (append 'color_scheme_' section.settings.color_scheme '_text') theme.settings) }}
+  <style>
+      .contact-form[data-section-id="{{ section.id }}"] .base-input textarea,
+      .contact-form[data-section-id="{{ section.id }}"] .base-input input {
+        color: {{ textColor }};
+      }
+      .contact-form[data-section-id="{{ section.id }}"] .base-input .placeholder {
+        color: {{ textColor }};
+      }
+  </style>
+{{/if}}
+
+<div class="color-scheme-{{ section.settings.color_scheme }} section-gap{{#if (isTruthy section.settings.color_scheme '!==' 'none')}}--padding{{/if}}">
+  <div class='__sl-custom-track-stage-contactForm container contact-form' data-section-type="contact-form" data-section-id="{{ section.id }}">
+      <h2 class="title4 contact-form__title text-{{ section.settings.title_align }}">{{ section.settings.title }}</h2>
+      <form class="row contact-form__wrapped" id="contact-form-{{ section.id }}">
+        {{#formItem 'name' "class='col-24 col-md-12'"}}
+          {{ snippet 'product/commons/base-input' inputRestAttr='autocomplete="name" maxlength="255"' name='name' placeholder=(t 'general.general.username') }}
+        {{/formItem}}
+        {{#formItem 'email' "class='col-24 col-md-12'"}}
+          {{ snippet 'product/commons/base-input' required='true' inputRestAttr='autocomplete="email" maxlength="255"' name='email' placeholder=(t 'customer.email.mail_common') }}
+        {{/formItem}}
+        {{#formItem 'phone' "class='col-24'"}}
+          {{ snippet 'product/commons/base-input' inputRestAttr='autocomplete="tel" maxlength="255"' name='phone' placeholder=(t 'general.general.tel_phone') }}
+        {{/formItem}}
+        {{#formItem 'comment' "class='col-24'"}}
+          {{ snippet 'product/commons/base-input' wrapperClass='contact-form__textarea' inputRestAttr='autocomplete="off" maxlength="5000"' name='comment' type='textarea' placeholder=(t 'products.product_details.message') }}
+        {{/formItem}}
+        <button class="__sl-custom-track-stage-contactForm-button btn btn-primary contact-form__submit">{{ t 'customer.general.send' }}</button>
+      </form>
+  </div>
+</div>
+
+
+{{#schema}}
+{
+  "name": "t:sections.contact-form.name",
+  "settings": [
+    {
+      "id": "title",
+      "type": "text",
+      "label": "t:sections.contact-form.settings.title.label",
+      "default": "Contact us"
+    },
+    {
+      "id": "title_align",
+      "type": "text_align",
+      "label": "t:sections.contact-form.settings.title_align.label",
+      "default": "center"
+    },
+    {
+      "id": "color_scheme",
+      "type": "select",
+      "label": "t:sections.contact-form.settings.color_scheme.label",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.contact-form.settings.color_scheme.options__0.label"
+        },
+        {
+          "value": "1",
+          "label": "t:sections.contact-form.settings.color_scheme.options__1.label"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.contact-form.settings.color_scheme.options__2.label"
+        },
+        {
+          "value": "3",
+          "label": "t:sections.contact-form.settings.color_scheme.options__3.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.contact-form.presets.presets__0.name",
+      "category_index": 6,
+      "category": "t:sections.contact-form.presets.presets__0.category",
+      "settings": {
+        "title": "Contact us",
+        "title_align": "center",
+        "color_scheme": "none"
+      }
+    }
+  ]
+}
+{{/schema}}

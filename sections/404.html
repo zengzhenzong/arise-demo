@@ -1,0 +1,27 @@
+{{#if request.document_direction '===' 'rtl'}}
+  {{ combine_asset_tag 'stage/404/style/index.rtl.css' inline=true}}
+{{else}}
+  {{ combine_asset_tag 'stage/404/style/index.css' inline=true}}
+{{/if}}
+
+{{ assign 'prefix' 'stage__notFound' }}
+<div class="container {{ prefix }}">
+  <div class="{{ prefix }}--content">
+    <div class="title3">
+      {{ t 'general.404.title' }}
+    </div>
+    <p class="body3 {{ prefix }}--description">
+      {{ t 'general.404.subtext' }}
+    </p>
+    <a class="body3 btn btn-link" href="{{ redirect_to '/' }}">
+      {{ t 'transaction.payment.continue_shopping' }}
+    </a>
+  </div>
+</div>
+
+{{ snippet 'product/product-recommend' }}
+{{#schema}}
+{
+  "name": "t:sections.notFoundPage.name"
+}
+{{/schema}}

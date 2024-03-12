@@ -1,0 +1,60 @@
+{{assign 'cart_type' trade_cart_type}}
+
+{{#trade_coupon_formatData 'cart'}}
+
+{{assign "hasValidDiscountCode" (isTruthy (find-in-array promotionCodesList true 'valid'))}}
+{{assign "hasInvalidDiscountCode" (isTruthy (find-in-array promotionCodesList false 'valid'))}}
+
+  <div class="trade_coupon__wrapper {{../cart_type}} {{cond (boolean @root.cartInfo.promotionCodeDTO '===' null) 'hide' ''}}">
+    <div class="trade_coupon_input_box">
+      {{#input
+        wrapperClass='trade_coupon'
+        value=''
+        placeholder=(t 'transaction.discount.coupon_code')}}
+      {{/input}}
+      <div class="trade_coupon__btns">
+        
+        <button id="trade_coupon_btn"
+          class="btn btn-primary trade_coupon__btns-apply is-disabled">
+          {{ t 'sales.general.apply_common' }}
+        </button>
+        <button id="trade_coupon_loading_btn" class="btn btn-primary trade_coupon__btns-loading is-disabled hide">
+          {{ t 'sales.general.apply_common' }}
+          {{ snippet 'icons/icon_coupon_btn_loading' }}
+        </button>
+      </div>
+    </div>
+    <div class="error-tips hide"></div>
+    
+    <div class="trade_coupon__appliedCodeBox {{#unless hasValidDiscountCode }}hide{{/unless}}">
+      {{#filter  promotionCodesList true prop='valid'}}
+        <div class="trade_coupon__code">
+          {{include 'snippets/icons/icon_coupon' size=20}}
+          <span class="trade_coupon__code-content">{{promotionCode}}</span>
+          <span class="trade_coupon__code__btn-del">
+            {{include 'snippets/icons/icon_close' size=10}}
+          </span>
+        </div>
+      {{/filter}}
+    </div>
+    <div class="trade_coupon__invalidCodeWrapper {{#unless hasInvalidDiscountCode }}hide{{/unless}}">
+      <div class="trade_coupon__invalidCodeTitle">
+        <span class="trade_coupon__invalidCodeTip">{{ t 'cart.couponCode.list.unavailable' }}</span>
+        <span class="trade_coupon__code__btn-del float">{{include 'snippets/icons/icon_close_reduction_code' size=16}}</span>
+      </div>
+      <div class="trade_coupon__invalidCodeBox">
+        {{#if hasInvalidDiscountCode}}
+          {{#filter promotionCodesList false prop='valid'}}
+            <div class="trade_coupon__code">
+               {{include 'snippets/icons/icon_coupon' size=20}}
+               <span class="trade_coupon__code-content">
+                 {{promotionCode}}
+               </span>
+            </div>
+          {{/filter}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
+
+{{/trade_coupon_formatData}}

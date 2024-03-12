@@ -1,0 +1,29 @@
+{{ assign 'currentStatus' (default status true) }}
+{{ assign 'reverseOrder' (default reverse false) }}
+
+<div
+  {{#if id}}id="{{ id }}"{{/if}}
+  class="global-dropdown-list {{ classes }} {{#if currentStatus}}is-open{{else}}is-close{{/if}}"
+  style="{{ styles }}"
+  data-disabled="{{ disabled }}"
+  {{#if relatedId}}
+  data-global-dropdown-list-related-id="{{ relatedId }}"
+  {{/if}}
+  >
+  {{#if reverseOrder}}
+    <div class="global-dropdown-list__main">
+      {{ slot_content 'dropdownList' }}
+    </div>
+    <div class="global-dropdown-list__head">
+      {{ slot_content 'trigger' }}
+    </div>
+  {{else}}
+    <div class="global-dropdown-list__head">
+      {{ slot_content 'trigger' }}
+    </div>
+
+    <div class="global-dropdown-list__main">
+      {{ slot_content 'dropdownList' }}
+    </div>
+  {{/if}}
+</div>

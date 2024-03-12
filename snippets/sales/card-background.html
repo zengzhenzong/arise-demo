@@ -1,0 +1,11 @@
+
+{{#if mobileBgImg }}
+  <div class="sales__card-background d-block d-md-none" style="background-image:url({{ mobileBgImg }});"></div>
+{{else if pcBgImg}}
+  
+  <div class="sales__card-background d-block d-md-none" style="background-image:url({{ pcBgImg }});"></div>
+{{/if}}
+
+{{#if pcBgImg }}
+  <div class="sales__card-background d-none d-md-block" style="background-image:url({{ pcBgImg }});"></div>
+{{/if}}

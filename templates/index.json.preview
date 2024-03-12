@@ -1,0 +1,246 @@
+{
+  "name": "index.html",
+  "sections": {
+    "featured-collection": {
+      "type": "featured-collection",
+      "disabled": false,
+      "settings": {
+        "title": "Featured collection",
+        "title_align": "center",
+        "full_width": false,
+        "products_num": 4,
+        "pc_cols": 4,
+        "md_cols": 2,
+        "slice_in_mobile": true,
+        "button_text": "View all",
+        "product_image_ratio": "0",
+        "product_fill_type": "contain",
+        "product_hover_show_next": false,
+        "product_categories": ""
+      },
+      "blocks": {},
+      "block_order": []
+    },
+    "video": {
+      "type": "video",
+      "disabled": false,
+      "settings": {
+        "title": "Video",
+        "background_position": "center",
+        "color_scheme": "",
+        "full_width": false,
+        "loop": false,
+        "cover": {
+          "url": ""
+        }
+      },
+      "blocks": {},
+      "block_order": []
+    },
+    "rich-text": {
+      "type": "rich-text",
+      "disabled": false,
+      "settings": {
+        "color_scheme": "",
+        "normal_width": true
+      },
+      "blocks": {
+        "heading": {
+          "type": "heading",
+          "settings": {
+            "heading": "",
+            "heading_size": "middle"
+          }
+        },
+        "text": {
+          "type": "text",
+          "settings": {
+            "text": "<p>A sentence or two introducing your brand, what you sell, and what makes your brand compelling to customers.</p>"
+          }
+        },
+        "button": {
+          "type": "button",
+          "settings": {
+            "button_text": "",
+            "outline_button": false
+          }
+        }
+      },
+      "block_order": [
+        "heading",
+        "text",
+        "button"
+      ]
+    },
+    "image-banner": {
+      "type": "image-banner",
+      "disabled": false,
+      "settings": {
+        "full_screen": true,
+        "banner_height_size": "middle",
+        "override_banner_height": false,
+        "pc_text_position": "center",
+        "pc_show_textarea": false,
+        "alpha_range": "30",
+        "color_scheme": "none",
+        "mobile_banner_flatten": true,
+        "m_show_textarea": true,
+        "banner1": {},
+        "banner2": {}
+      },
+      "blocks": {
+        "banner-title": {
+          "type": "title",
+          "settings": {
+            "title": "Two Line\nTitle Slide",
+            "title_size": "medium"
+          }
+        },
+        "banner-desc": {
+          "type": "desc",
+          "settings": {
+            "description": "And optional subtext"
+          }
+        },
+        "banner-button": {
+          "type": "button",
+          "settings": {
+            "button_text": "Shop this",
+            "link": "",
+            "outline_button": true,
+            "link_text_2": "Shop all",
+            "link_2": "",
+            "outline_button_2": true
+          }
+        }
+      },
+      "block_order": [
+        "banner-title",
+        "banner-desc",
+        "banner-button"
+      ]
+    },
+    "multi-media-splicing": {
+      "type": "multi-media-splicing",
+      "disabled": false,
+      "settings": {
+        "title_align": "center",
+        "desktop_layout": "left",
+        "mobile_layout": "splicing",
+        "color_scheme": ""
+      },
+      "blocks": {
+        "video-item": {
+          "type": "video",
+          "settings": {
+            "video_alt": "Describe the video",
+            "image_padding": "cover"
+          }
+        },
+        "product": {
+          "type": "product",
+          "settings": {
+            "product_hover_show_next": false,
+            "image_padding": "cover",
+            "product_id": ""
+          }
+        },
+        "collection": {
+          "type": "collection",
+          "settings": {
+            "image_padding": "cover",
+            "category_id": ""
+          }
+        }
+      },
+      "block_order": [
+        "video-item",
+        "product",
+        "collection"
+      ]
+    },
+    "text-columns-with-images": {
+      "type": "text-columns-with-images",
+      "disabled": false,
+      "settings": {
+        "title": "Text columns with images",
+        "title_align": "center",
+        "image_width": "50%",
+        "image_ratio": "auto",
+        "text_align": "left",
+        "show_block_bg": false,
+        "button_text": "Button",
+        "jump_link": "",
+        "show_touch": false,
+        "color_scheme": "none",
+        "pc_cols": 3,
+        "md_cols": 1
+      },
+      "blocks": {
+        "columns-image-1": {
+          "type": "item",
+          "settings": {
+            "title": "Example title",
+            "description": "Use this section to explain a set of product features, to link to a series of pages, or to answer common questions about your products. Add images for emphasis.",
+            "button_text": "Optional button",
+            "jump_link": "",
+            "image": {}
+          }
+        },
+        "columns-image-2": {
+          "type": "item",
+          "settings": {
+            "title": "Example title",
+            "description": "Use this section to explain a set of product features, to link to a series of pages, or to answer common questions about your products. Add images for emphasis.",
+            "button_text": "Optional button",
+            "jump_link": "",
+            "image": {}
+          }
+        },
+        "columns-image-3": {
+          "type": "item",
+          "settings": {
+            "title": "Example title",
+            "description": "Use this section to explain a set of product features, to link to a series of pages, or to answer common questions about your products. Add images for emphasis.",
+            "button_text": "Optional button",
+            "jump_link": "",
+            "image": {}
+          }
+        }
+      },
+      "block_order": [
+        "columns-image-1",
+        "columns-image-2",
+        "columns-image-3"
+      ]
+    },
+    "app-block-instagram": {
+      "type": "apps",
+      "disabled": false,
+      "settings": {
+        "include_margins": {
+          "value": true
+        }
+      },
+      "blocks": {
+        "block1": {
+          "type": "shopline://apps/Instagram照片墙/blocks/app-block/7c8cf6f0-6f59-46db-97f0-a2ee9686ab4b",
+          "settings": {},
+          "is_recommendation": true
+        }
+      },
+      "block_order": [
+        "block1"
+      ]
+    }
+  },
+  "order": [
+    "image-banner",
+    "rich-text",
+    "featured-collection",
+    "multi-media-splicing",
+    "video",
+    "text-columns-with-images",
+    "app-block-instagram"
+  ]
+}

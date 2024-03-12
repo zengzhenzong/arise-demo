@@ -1,0 +1,58 @@
+{{ assign 'navigation' (get settings.menu navigations) }}
+
+
+<div class="footer__menu d-none d-md-block">
+  {{ snippet 'footer-block-header' normalTitle="Menu" }}
+
+  <div class="footer__block-main">
+    {{#with this as |global|}}
+      {{#if navigation }}
+        <ul class="footer__menu-list body5">
+          {{#each navigation.nodeTree as | navItem |}}
+            {{ assign 'query' global.request.uri.query}}
+            {{ assign 'locale' global.request.locale}}
+            {{ assign 'allCollections' global.all_collections}}
+            {{ assign 'allProducts' global.all_products}}
+            {{ assign 'navDetail' (navLink navItem query locale allCollections allProducts ) }}
+            <li {{{ navItem.shopline_attributes }}}>
+              <a class="footer__menu-hover footer__block-item __sl-custom-track-stage-navItem" {{{navDetail.hrefAttr}}} rel="noreferrer">{{navDetail.name}}</a>
+            </li>
+          {{/each}}
+        </ul>
+      {{/if}}
+    {{/with}}
+  </div>
+</div>
+
+
+<div class="footer__menu d-md-none">
+  {{#snippet 'global-dropdown-list' status=(default default_fold false)}}
+    {{#child 'trigger'}}
+      {{#snippet 'footer-block-header' normalTitle="Menu"}}
+        {{ snippet 'icons/icon_dropdown_list_open' classes="close-icon" }}
+        {{ snippet 'icons/icon_arrow_down' classes="open-icon" }}
+      {{/snippet}}
+    {{/child}}
+
+    {{#child 'dropdownList'}}
+      <div class="footer__block-main">
+        {{#with this as |global|}}
+          {{#if navigation }}
+            <ul class="footer__menu-list body5">
+              {{#each navigation.nodeTree as | navItem |}}
+                {{ assign 'query' global.request.uri.query}}
+                {{ assign 'locale' global.request.locale}}
+                {{ assign 'allCollections' global.all_collections}}
+                {{ assign 'allProducts' global.all_products}}
+                {{ assign 'navDetail' (navLink navItem query locale allCollections allProducts ) }}
+                <li {{{ navItem.shopline_attributes }}}>
+                  <a class="__sl-custom-track-stage-navItem" {{{navDetail.hrefAttr}}} rel="noreferrer">{{navDetail.name}}</a>
+                </li>
+              {{/each}}
+            </ul>
+          {{/if}}
+        {{/with}}
+      </div>
+    {{/child}}
+  {{/snippet}}
+</div>

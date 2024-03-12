@@ -1,0 +1,33 @@
+{{ assign 'isMobile' request.is_mobile }}
+
+
+{{ assign 'navbar' (JSONparse (append '[
+  {"type": "center","path":"/user/center","text":"' (t "customer.account.personal__info") '"},
+  {"type": "orders","path":"/user/orders","text":"' (t "customer.general.orders") '"}
+]')) }}
+
+<div class="user-center__container" id="user-center">
+  <div class="navbar__container">
+    <div class="navbar">
+      {{#each navbar}}
+        {{#with this as |global|}}
+          <a href="{{ redirect_to path }}" data-type="{{ type }}" class="navbar__item {{cond (eq @root.request.uri.path (redirect_to path)) 'active' ''}}">{{ text }}</a>
+        {{/with}}
+      {{/each}}
+    </div>
+
+    {{#if (isFalsey isMobile)}}
+      <div class="user-center__btns">
+        <a href="javascript:;" class="user-center__btn--link signout-link">{{t 'customer.general.sign__out'}}</a>
+      </div>
+    {{/if}}
+  </div>
+
+  {{slot_content}}
+
+  {{#if (isTruthy isMobile)}}
+    <div class="user-center__btns">
+      <a href="javascript:;" class="user-center__btn--link signout-link">{{t 'customer.general.sign__out'}}</a>
+    </div>
+  {{/if}}
+</div>

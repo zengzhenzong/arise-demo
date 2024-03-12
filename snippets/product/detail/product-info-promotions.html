@@ -1,0 +1,10 @@
+
+{{#not product.spu.inquiry}}
+
+  <div class="d-none d-md-block sales__flash-sale notranslate sales-promotion-plugin"></div>
+  <div class="d-none d-md-block countdown-component">
+    {{ snippet 'product/detail/countdown-widget' spuSeq=spuInfo.spuSeq sortationList=spuInfo.sortationList }}
+  </div>
+{{/not}}
+
+<div class="discount-style-plugin"></div>

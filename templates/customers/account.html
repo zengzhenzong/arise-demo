@@ -1,0 +1,26 @@
+{{ preload_state 'customer_address' }}
+{{ preload_state 'customer' }}
+
+
+{{ assign 'deleteAcccountStatus' customer.customerLogoutFrontDto.logoutStatus}}
+{{ assign 'isDeleteAccounting' (boolean deleteAcccountStatus '===' 3)}}
+
+{{#snippet 'customer/user-center-container' }}
+  {{#if isDeleteAccounting}}
+    <div class="account__notify">
+      <p>{{t 'customer.account.revoke_message' time=(dayjs method='format' init=customer.customerLogoutFrontDto.eraseTime format='YYYY-MM-DD' ) }}</p>
+      <button class="btn revoke-button">{{t 'customer.account.revoke' }}</button>
+    </div>
+  {{/if}}
+
+  <div class="customer-information">
+    <div class="customer-information-list">
+      {{ snippet 'customer/account/account' userInfo=customer.userInfoDTO deleteAcccountStatus=deleteAcccountStatus }}
+      {{ snippet 'customer/account/subscription/index' }}
+      {{ snippet 'customer/account/personal' }}
+    </div>
+    <div class="customer-information-list">
+      {{ snippet 'customer/account/address' addressList=customer.userAddressList }}
+    </div>
+  </div>
+{{/snippet}}

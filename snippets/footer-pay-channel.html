@@ -1,0 +1,17 @@
+{{ assign 'pay_channel_list' (arrayify 0) }}
+
+{{#if section.settings.show_pay_channel.show}}
+  {{#each section.settings.show_pay_channel.pay_channel_list}}
+    {{#if show}}
+      {{array-push ../pay_channel_list type}}
+    {{/if}}
+  {{/each}}
+{{/if}}
+
+<div class="footer__paychannel">
+  {{#each pay_channel_list}}
+    <div class="footer__paychannel-item">
+      {{payment_type_svg_tag this}}
+    </div>
+  {{/each}}
+</div>

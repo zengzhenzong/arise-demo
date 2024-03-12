@@ -1,0 +1,5 @@
+{{#if request.document_direction '===' 'rtl'}}
+  {{ combine_asset_tag 'customer/order/list/style/main.rtl.css' inline=true}}
+{{else}}
+  {{ combine_asset_tag 'customer/order/list/style/main.css' inline=true}}
+{{/if}}

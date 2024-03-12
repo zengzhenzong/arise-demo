@@ -1,0 +1,57 @@
+{{#if request.document_direction '===' 'rtl'}}
+  {{ combine_asset_tag 'stage/custom-page/index.rtl.css' inline=true}}
+{{else}}
+  {{ combine_asset_tag 'stage/custom-page/index.css' inline=true}}
+{{/if}}
+<!-- stage/main-page/main.js -->
+  {{ combine_asset_tag 
+    'vendors/eventemitter3.min.js'
+    'vendors/js-cookie.min.js'
+    'vendors/dayjs.min.js'
+    'vendors/@sl_logger.min.js'
+    'vendors/debug.min.js'
+    type="text/javascript"
+    defer=true
+  }}
+  {{ combine_asset_tag 
+    'theme-shared/utils/get-env.js'
+    'theme-shared/utils/event-bus.js'
+    'theme-shared/utils/parsePathToArray.js'
+    'theme-shared/utils/state-selector.js'
+    'theme-shared/utils/report/hdReport.js'
+    'theme-shared/utils/report/@hiido.js'
+    'theme-shared/utils/createLogger.js'
+    'theme-shared/utils/report/utils.js'
+    'theme-shared/utils/report/const.js'
+    'theme-shared/utils/report/index.js'
+    'stage/main-page/script/report.js'
+    'commons/utils/createShadowDom.js'
+    'stage/custom-page/index.js'
+    'stage/main-page/main.js'
+    type="text/javascript"
+    defer=true
+  }}
+
+{{ assign 'homeText' (t 'general.general.home') }}
+
+{{ preload_state 'pageInfo.originalPath' }}
+<div class='container stage-main-page__container'>
+  {{ assign 'routesList' (JSONparse (append '[{"name":"' homeText '","link":"/"}]')) }}
+  {{ array-push routesList (object_create name=pageInfo.name.default) }}
+  {{#if theme.settings.show_breadcrumb}}
+    {{ snippet 'blogs/breadcrumb' classes='blogs__breadcrumb d-none d-md-flex' routesList=routesList }}
+  {{/if}}
+  <h1 class='title3 __sl-custom-track-page-title'>{{{ pageInfo.name.default }}}</h1>
+  <div class="__sl-custom-track-page-content">
+    <div class="render-by-page">
+      {{ snippet 'custom-page-render' pageConfig=pageInfo.htmlConfig forPage=true class='bottom' }}
+    </div>
+  </div>
+</div>
+
+{{#schema}}
+{
+  "name": "t:sections.main-page.name",
+  "class": "section-gap"
+}
+{{/schema}}

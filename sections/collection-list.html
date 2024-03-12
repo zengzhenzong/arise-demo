@@ -1,0 +1,358 @@
+---
+collection_products:
+  limit: 0
+all_collections:
+  need_first_product: {{ boolean theme.settings.collection_grid_image '==' 'product' }}
+---
+
+{{#if request.document_direction '===' 'rtl'}}
+  {{ combine_asset_tag 'stage/collection-list/index.rtl.css' inline=true}}
+{{else}}
+  {{ combine_asset_tag 'stage/collection-list/index.css' inline=true}}
+{{/if}}
+<!-- stage/collection-list/index.js -->
+  {{#if request.document_direction '===' 'rtl'}}
+    {{ combine_asset_tag 'vendors/swiper.min.rtl.css' inline=true }}
+  {{else}}
+    {{ combine_asset_tag 'vendors/swiper.min.css' inline=true }}
+  {{/if}}
+  {{ combine_asset_tag 
+    'vendors/swiper.min.js'
+    type="text/javascript"
+    defer=true
+  }}
+  {{ combine_asset_tag 
+    'theme-shared/utils/sectionsLoad/index.js'
+    'stage/collection-list/index.js'
+    type="text/javascript"
+    defer=true
+  }}
+
+
+{{ assign 'blocks' (product_blocks_order_translate section 'blocks' 'block_order') }}
+{{ assign 'title' section.settings.title }}
+{{ assign 'image_round' (if section.settings.collection_image_shape '===' 'round') }}
+{{ assign 'imageRatio' (ternary image_round 100 section.settings.collection_image_ratio) }}
+
+{{#if image_round}}
+  <style>
+    #collection-list-{{ section.id }} .collection-item *,
+    #collection-list-{{ section.id }} .collection-item *::after,
+    #collection-list-{{ section.id }} .collection-item *::before {
+      --card-border-radius: 50%;
+      --card-border-radius-outset: 50%;
+    }
+  </style>
+{{/if}}
+
+{{ assign 'color_scheme' section.settings.color_scheme }}
+{{ assign 'slice_in_mobile' section.settings.slice_in_mobile }}
+{{ assign 'slice_in_pc' section.settings.slice_in_pc }}
+
+{{ assign 'limitWidthClass' '' }}
+{{ assign 'col' 3 }}
+
+{{ assign 'goodsBlockLength' (length blocks) }}
+{{#if (boolean goodsBlockLength '===' 1)}}
+  {{ assign 'col' 1 }}
+  {{ assign 'limitWidthStyle' 'limit-col-1-max-width' }}
+{{/if}}
+
+{{#or (boolean goodsBlockLength '===' 2) (boolean goodsBlockLength '===' 4)}}
+  {{ assign 'col' 2 }}
+{{/or}}
+
+{{#or (boolean goodsBlockLength '===' 3) (boolean goodsBlockLength '===' 5) (boolean goodsBlockLength '>=' 6)}}
+  {{ assign 'col' 3 }}
+{{/or}}
+
+{{ assign 'pc_col' section.settings.pc_cols }}
+
+<script type="text/json" id="collectionList-data-{{ section.id }}">{{{ stringify section.settings }}}</script>
+
+<div
+  id="collection-list-{{ section.id }}"
+  class="color-scheme-{{ color_scheme }} section-gap{{#if color_scheme '!==' 'none'}}--padding{{/if}}"
+  data-section-type="collection-list"
+  data-section-id="{{ section.id }}">
+  <div class="__sl-custom-track-stage-colletionlist colletionlist {{#if section.settings.pc_full_screen}}colletionlist--pc-full-screen{{/if}} container {{ limitWidthStyle }} {{#if (isTruthy slice_in_mobile)}}slice_in_mobile{{/if}}">
+    <h2 class="section-title colletionlist__title title4 text-{{ section.settings.title_align }}">{{ title }}</h2>
+
+    {{#if slice_in_pc}}
+      <div class="colletionlist__swiper d-none d-md-block">
+
+        <div class="colletionlist-swiper-{{ section.id }} colletionlist__swiper-box" >
+          <div class="swiper-wrapper row row-cols-{{ pc_col }}">
+          {{#each blocks}}
+            {{ assign 'sortationData' (get settings.category_id ../all_collections) }}
+            {{#if (boolean (boolean settings.title '===' undefined) '||' (boolean settings.title '===' ''))}}
+              {{#if (isFalsey settings.category_id)}}
+                {{ assign 'showTitle' 'Example Collection' }}
+              {{else}}
+                {{ assign 'showTitle' (get 'title' sortationData) }}
+              {{/if}}
+            {{else}}
+              {{ assign 'showTitle' settings.title }}
+            {{/if}}
+            <div class="collection-item-slide" {{{ this.shopline_attributes }}}>
+              {{ snippet 'product/commons/collection-item' sortationData=sortationData title=showTitle imageRatio=../imageRatio bgDisplayPosition=settings.image_display_area titleColor='inherit' shopline_attributes=this.shopline_attributes }}
+            </div>
+          {{/each}}
+          </div>
+        </div>
+        <div id="swiper-button-prev-{{ section.id }}" class="colletionlist__arrow colletionlist__arrow--left">
+          {{ snippet 'icons/icon_strong_arrow_r' class='mobile-nav__icon' }}
+        </div>
+        <div id="swiper-button-next-{{ section.id }}" class="colletionlist__arrow colletionlist__arrow--right">
+          {{ snippet 'icons/icon_strong_arrow_r' class='mobile-nav__icon' }}
+        </div>
+      </div>
+    {{/if}}
+
+    <div class="colletionlist__slide-container {{#if (isTruthy slice_in_mobile)}}slice_in_mobile{{/if}} {{#if (isTruthy slice_in_pc)}}d-block d-md-none{{/if}}">
+      <div class="colletionlist__cagetegory row row-cols-{{ col }} row-cols-md-{{ pc_col }}">
+        {{#each blocks}}
+          {{ assign 'sortationData' (get settings.category_id ../all_collections) }}
+          {{#if (boolean (boolean settings.title '===' undefined) '||' (boolean settings.title '===' ''))}}
+            {{#if (isFalsey settings.category_id)}}
+              {{ assign 'showTitle' 'Example Collection' }}
+            {{else}}
+              {{ assign 'showTitle' (get 'title' sortationData) }}
+            {{/if}}
+          {{else}}
+            {{ assign 'showTitle' settings.title }}
+          {{/if}}
+
+          {{ snippet 'product/commons/collection-item' sortationData=sortationData title=showTitle imageRatio=../imageRatio bgDisplayPosition=settings.image_display_area titleColor='inherit' shopline_attributes=this.shopline_attributes }}
+        {{/each}}
+      </div>
+    </div>
+
+    {{#if (isTruthy section.settings.button_text)}}
+      <div class="collection-list-more-btn">
+        <a class="btn btn-primary"
+          href="{{ redirect_to '/collections-all' }}">
+          {{ section.settings.button_text }}
+        </a>
+      </div>
+    {{/if}}
+  </div>
+</div>
+
+
+{{#schema}}
+{
+  "name": "t:sections.collection-list.name",
+  "presets": [
+    {
+      "category_index": 1,
+      "category": "t:sections.collection-list.presets.presets__0.category",
+      "name": "t:sections.collection-list.presets.presets__0.name",
+      "settings": {
+        "title": "Collection list",
+        "collection_image_ratio": "100",
+        "color_scheme": "none",
+        "slice_in_mobile": false,
+        "slice_in_pc": false,
+        "button_text": "View all",
+        "pc_cols": "3"
+      },
+      "blocks": [
+        {
+          "type": "collection",
+          "settings": {
+            "image_display_area": "center_center"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "image_display_area": "center_center"
+          }
+        },
+        {
+          "type": "collection",
+          "settings": {
+            "image_display_area": "center_center"
+          }
+        }
+      ]
+    }
+  ],
+  "max_blocks": 15,
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.collection-list.settings.title.label"
+    },
+    {
+      "id": "title_align",
+      "type": "text_align",
+      "label": "t:sections.collection-list.settings.title_align.label",
+      "default": "center"
+    },
+    {
+      "id": "collection_image_ratio",
+      "type": "select",
+      "label": "t:sections.collection-list.settings.collection_image_ratio.label",
+      "options": [
+        {
+          "value": "0",
+          "label": "t:sections.collection-list.settings.collection_image_ratio.options__0.label"
+        },
+        {
+          "value": "100",
+          "label": "t:sections.collection-list.settings.collection_image_ratio.options__1.label"
+        },
+        {
+          "value": "75",
+          "label": "t:sections.collection-list.settings.collection_image_ratio.options__2.label"
+        },
+        {
+          "value": "150",
+          "label": "t:sections.collection-list.settings.collection_image_ratio.options__3.label"
+        }
+      ],
+      "default": "100"
+    },
+    {
+      "id": "collection_image_shape",
+      "type": "select",
+      "label": "t:sections.collection-list.settings.collection_image_shape.label",
+      "options": [
+        {
+          "value": "square",
+          "label": "t:sections.collection-list.settings.collection_image_shape.options__0.label"
+        },
+        {
+          "value": "round",
+          "label": "t:sections.collection-list.settings.collection_image_shape.options__1.label"
+        }
+      ],
+      "default": "square"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "t:sections.collection-list.settings.color_scheme.label",
+      "default": "none",
+      "options": [
+        {
+          "value": "none",
+          "label": "t:sections.collection-list.settings.color_scheme.options__0.label"
+        },
+        {
+          "value": "1",
+          "label": "t:sections.collection-list.settings.color_scheme.options__1.label"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.collection-list.settings.color_scheme.options__2.label"
+        },
+        {
+          "value": "3",
+          "label": "t:sections.collection-list.settings.color_scheme.options__3.label"
+        }
+      ]
+    },
+    {
+      "id": "pc_cols",
+      "type": "range",
+      "label": "t:sections.collection-list.settings.pc_cols.label",
+      "default": "3",
+      "min": 1,
+      "max": 6,
+      "step": 1
+    },
+    {
+      "id": "pc_full_screen",
+      "type": "switch",
+      "label": "t:sections.collection-list.settings.pc_full_screen.label",
+      "default": false
+    },
+    {
+      "type": "switch",
+      "id": "slice_in_pc",
+      "label": "t:sections.collection-list.settings.slice_in_pc.label",
+      "default": false
+    },
+    {
+      "type": "switch",
+      "id": "slice_in_mobile",
+      "label": "t:sections.collection-list.settings.slice_in_mobile.label",
+      "default": false
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "t:sections.collection-list.settings.button_text.label",
+      "default": "View all"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "collection",
+      "icon": "normal",
+      "name": "t:sections.collection-list.blocks.collection.name",
+      "settings": [
+        {
+          "type": "collection_picker",
+          "id": "category_id",
+          "label": "t:sections.collection-list.blocks.collection.settings.category_id.label"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.collection-list.blocks.collection.settings.title.label"
+        },
+        {
+          "type": "select",
+          "id": "image_display_area",
+          "label": "t:sections.collection-list.blocks.collection.settings.image_display_area.label",
+          "info": "t:sections.collection-list.blocks.collection.settings.image_display_area.info",
+          "default": "center_center",
+          "options": [
+            {
+              "value": "left_top",
+              "label": "t:sections.collection-list.blocks.collection.settings.image_display_area.options__0.label"
+            },
+            {
+              "value": "center_top",
+              "label": "t:sections.collection-list.blocks.collection.settings.image_display_area.options__1.label"
+            },
+            {
+              "value": "right_top",
+              "label": "t:sections.collection-list.blocks.collection.settings.image_display_area.options__2.label"
+            },
+            {
+              "value": "center_left",
+              "label": "t:sections.collection-list.blocks.collection.settings.image_display_area.options__3.label"
+            },
+            {
+              "value": "center_center",
+              "label": "t:sections.collection-list.blocks.collection.settings.image_display_area.options__4.label"
+            },
+            {
+              "value": "center_right",
+              "label": "t:sections.collection-list.blocks.collection.settings.image_display_area.options__5.label"
+            },
+            {
+              "value": "left_bottom",
+              "label": "t:sections.collection-list.blocks.collection.settings.image_display_area.options__6.label"
+            },
+            {
+              "value": "center_bottom",
+              "label": "t:sections.collection-list.blocks.collection.settings.image_display_area.options__7.label"
+            },
+            {
+              "value": "right_bottom",
+              "label": "t:sections.collection-list.blocks.collection.settings.image_display_area.options__8.label"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
+{{/schema}}

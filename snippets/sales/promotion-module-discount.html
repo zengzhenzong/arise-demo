@@ -1,0 +1,57 @@
+{{ assign 'promotion' _promotion}}
+{{ assign 'promotionBenefit' (itemAt promotion.promotionBenefitList 0) }}
+
+{{ assign 'saleExtInfo' promotion.saleExtInfo }}
+{{#if saleExtInfo}}
+ {{assign 'extInfo' (JSONparse saleExtInfo)}}
+{{else}}
+  {{assign 'extInfo' (JSONparse '{}')}}
+{{/if}}
+
+{{#if extInfo.cartBannerStyle}}
+  {{assign 'cartBannerStyle' extInfo.cartBannerStyle}}
+{{else}}
+  {{assign 'cartBannerStyle' (object_create discountTextColor='' bannerBgColor='' bannerTextColor='') }}
+{{/if}}
+
+{{assign 'warper' (object_create style=(append 'color: ' cartBannerStyle.discountTextColor))}}
+
+{{ assign "_promotion_config_" (sales_promotion_reminder_translate promotion (object_create lineBreak=is-mobile warper=warper))}}
+
+
+{{assign 'themeBg' (default theme.settings.color_page_background '#ffffff')}}
+
+{{ assign 'themeBgLightness' (color_extract themeBg 'lightness') }}
+
+{{#not cartBannerStyle.bannerBgColor}}
+  {{#if themeBgLightness '<' 75}}
+    <style>
+    .cart-sku-list-promotion-module, .cart-sku-list-promotion-module-can-jump {
+      background: rgba({{hex_2_rgb theme.settings.color_btn_background}}, 0.24)
+    }
+  </style>
+  {{/if}}
+{{/not}}
+
+
+{{#if _promotion_config_.step '==' 3}}
+  <div class="cart-sku-list-promotion-module notranslate" style="background: {{cartBannerStyle.bannerBgColor}};">
+    <span style="color: {{cartBannerStyle.bannerTextColor}};">
+      {{noTranslationHTML (javascript_template promotionBenefit.extMap.bannerText _promotion_config_.params (toRegex '\{\s*(\w+)\s*\}' flags="g"))}}
+    </span>
+  </div>
+{{else}}
+  <div class="cart-sku-list-promotion-module-can-jump notranslate" style="background: {{cartBannerStyle.bannerBgColor}};">
+    <a href="{{redirect_to (append '/activity/' promotion.activitySeq '?type=pool')}}{{#if _promotion_config_.params.extMap.meetThreshold '===' 'true'}}&query_product_type=2{{/if}}"
+      class="cart-sku-list-promotion-module-can-jump-wrapper">
+      <div style="color: {{cartBannerStyle.bannerTextColor}};">
+        {{noTranslationHTML (javascript_template promotionBenefit.extMap.bannerText _promotion_config_.params (toRegex '\{\s*(\w+)\s*\}' flags="g"))}}
+      </div>
+      <div class="icon directional cart-sku-list-promotion-module-can-jump-arrow" style="font-size:0;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <path d="M4 11L9 6L4 1" stroke-width="1.5" stroke-linecap="round" style="stroke: {{cartBannerStyle.bannerTextColor}}"/>
+        </svg>
+      </div>
+    </a>
+  </div>
+{{/if}}

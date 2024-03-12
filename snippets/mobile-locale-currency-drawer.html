@@ -1,0 +1,53 @@
+{{assign 'locale_selector' false}}
+{{assign 'country_selector' false}}
+
+{{#if (boolean section.settings.show_locale_selector '&&' (gt (length localization.available_languages) 1))}}
+  {{assign 'locale_selector' true}}
+{{/if}}
+
+
+
+{{#snippet 'global-top-drawer' id="global-locale-drawer"}}
+  {{#with this as |global|}}
+    <div class="drawer-menu-locale-currency locale-currency" data-locale>
+      <div class="drawer-header">
+        <span class="click drawer-btn-close j-top-drawer-close">
+          {{ snippet 'icons/icon_header_close' }}
+        </span>
+      </div>
+
+      <ul >
+        {{#each global.localization.available_languages}}
+        <li class="text-left" data-alias="{{iso_code}}" data-name="{{endonym_name}}">
+          <span class="click">
+            <span class="notranslate body5 align-middle">{{endonym_name}}</span>
+          </span>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/with}}
+{{/snippet}}
+
+{{#snippet 'global-top-drawer' id="global-country-drawer"}}
+  {{#with this as |global|}}
+    <div class="drawer-menu-locale-currency locale-currency" data-country>
+      <div class="drawer-header">
+        <span class="click drawer-btn-close j-top-drawer-close">
+          {{ snippet 'icons/icon_header_close' }}
+        </span>
+      </div>
+
+      <ul >
+				{{#each global.localization.available_countries}}
+        <li class="text-left" data-alias="{{iso_code}}" data-name="{{name}}（{{currency.iso_code}} {{currency.symbol}}）">
+          <span class="click">
+            <span class="notranslate body5 align-middle">{{name}}</span>
+          </span>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/with}}
+{{/snippet}}
+

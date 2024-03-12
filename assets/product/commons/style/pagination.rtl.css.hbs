@@ -1,0 +1,122 @@
+.simple_pagination>span.pagination_next,.simple_pagination>span.pagination_pre,.simple_pagination_scope_item{
+  border-radius:100%;
+  padding:0;
+}
+
+.simple_pagination{
+  align-items:center;
+  border:1px solid rgb(var(--color-entry-line));
+  border-radius:4px;
+  display:flex;
+  justify-content:center;
+  margin:20px auto 0;
+  padding:8px 10px;
+  width:max-content;
+}
+.simple_pagination.hide{
+  display:none;
+}
+.simple_pagination>span{
+  cursor:pointer;
+  display:block;
+  padding:0 13px;
+  user-select:none;
+}
+.simple_pagination>span.pagination_pre{
+  margin-left:5px;
+  order:1;
+}
+.simple_pagination>span.pagination_next{
+  margin-right:5px;
+  order:3;
+}
+.simple_pagination>span.pagination-disabled{
+  opacity:.5;
+}
+.simple_pagination>span>a{
+  height:100%;
+  text-decoration:none;
+  width:100%;
+}
+.simple_pagination>span .pagination_icon_arrow_color,.simple_pagination>span>a{
+  align-items:center;
+  display:flex;
+  justify-content:center;
+}
+.simple_pagination .pagination__num--container{
+  order:2;
+}
+
+.simple_pagination-info{
+  color:var(--color-entry-line, #000);
+  margin-top:12px;
+  text-align:center;
+}
+
+.normal_pagination>span.pagination_next,.normal_pagination>span.pagination_pre,.normal_pagination_scope_item{
+  background-color:rgba(var(--color-btn-background));
+  border-radius:100%;
+  height:42px;
+  padding:0;
+  width:42px;
+}
+
+.normal_pagination.mobile>span.pagination_next,.normal_pagination.mobile>span.pagination_pre,.normal_pagination_scope_item_mobile{
+  height:38px;
+  width:38px;
+}
+
+.normal_pagination>span.on>a,.normal_pagination>span:hover>a,.normal_pagination_scope_item_hover{
+  color:rgba(var(--color-text));
+}
+
+.normal_pagination{
+  align-items:center;
+  display:flex;
+  justify-content:center;
+  margin-bottom:20px;
+  margin-top:20px;
+}
+.normal_pagination.hide{
+  display:none;
+}
+.normal_pagination>span{
+  cursor:pointer;
+  display:block;
+  font-family:Futura LT Book;
+  padding:0 13px;
+  user-select:none;
+}
+.normal_pagination>span.pagination_pre{
+  margin-left:5px;
+}
+.normal_pagination>span.pagination_next{
+  margin-right:5px;
+}
+.normal_pagination>span.pagination-disabled{
+  opacity:.3;
+}
+.normal_pagination>span>a{
+  color:rgba(var(--color-text), .5);
+  height:100%;
+  text-decoration:none;
+  width:100%;
+}
+.normal_pagination>span>a,.normal_pagination>span>a>span{
+  align-items:center;
+  display:flex;
+  justify-content:center;
+}
+.normal_pagination>span>a>span.pagination_icon_arrow_color{
+  color:#fff;
+}
+.normal_pagination.mobile>span{
+  font-size:14px;
+  padding:0 10.5px;
+}
+.normal_pagination.mobile>span.pagination_pre{
+  margin-left:2.5px;
+}
+.normal_pagination.mobile>span.pagination_next{
+  margin-right:2.5px;
+}

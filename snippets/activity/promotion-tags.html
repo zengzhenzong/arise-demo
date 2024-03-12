@@ -1,0 +1,61 @@
+{{#if scene "pdp"}}
+  
+
+  {{ assign "class" "pdp"}}
+{{else}}
+  
+
+  {{ assign "class" "activity"}}
+{{/if}}
+{{assign 'isMobile' request.is_mobile}}
+<div class="sales__promotionTags {{class}}">
+  
+  <div class="sales__promotionTags-packUp">
+    {{#each benefitConditions}}
+      {{#if @index "<" 1}}
+
+        {{ snippet 'activity/promotion-tag' className="sales__promotion-tags-tag sales__promotion-tags-tag-hook" benefitCondition=this benefitType=../benefitType shopline_attributes=this.shopline_attributes }}
+      {{/if}}
+    {{/each}}
+    
+    {{#if benefitConditions.length '>=' 2}}
+      <div class="sales__promotionTags-switch">
+        <i class="sales__promotionTags-switchIcon __sl-track_click" data-track-event_name="click_component" data-track-custom_component="view_more">
+          {{snippet 'activity/arrow_down'}}
+        </i>
+      </div>
+    {{/if}}
+    {{#if scene "pdp"}}
+      
+      <div class="sales__promotionTags-items">
+        <div class="sales__promotionTags-items-header">
+          <span class="sales__promotionTags-items-title">{{t 'sales.promotion.discount_tag.label'}}</span>
+          <span class="sales__promotionTags-items-close sales__promotionTags-items-close-hook">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M19.2 4.80005L4.80005 19.2" stroke="#1E1E1E" stroke-width="1.5" />
+              <path d="M4.80005 4.79995L19.2001 19.2" stroke="#1E1E1E" stroke-width="1.5" />
+            </svg>
+          </span>
+        </div>
+        <div class="sales__promotionTags-items-body">
+          {{#each benefitConditions}}
+            <div class="sales__promotionTags-item" {{{ this.shopline_attributes }}}>
+
+              {{ snippet 'activity/promotion-tag' benefitCondition=this benefitType=../benefitType }}
+            </div>
+          {{/each}}
+        </div>
+      </div>
+    {{/if}}
+  </div>
+
+  
+  {{#if scene '!==' "pdp"}}
+    {{#each benefitConditions}}
+      <span class="sales__promotionTags-item" {{{ this.shopline_attributes }}}>
+
+        {{ snippet 'activity/promotion-tag' benefitCondition=this benefitType=../benefitType }}
+      </span>
+    {{/each}}
+  {{/if}}
+</div>

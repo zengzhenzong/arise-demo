@@ -1,0 +1,21 @@
+{{ layout 'proofing' }}
+
+{{#if request.document_direction '===' 'rtl'}}
+  {{ combine_asset_tag 'proofing/style/index.rtl.css' inline=true}}
+{{else}}
+  {{ combine_asset_tag 'proofing/style/index.css' inline=true}}
+{{/if}}
+
+{{ assign 'prefix' 'stage__proofing' }}
+
+<div class='container {{ prefix }}'>
+  <div>
+    <img width="240" height="160" src='{{ assets_url 'images/store-close.png' }}' alt="close the store" />
+    <p class='body1 {{ prefix }}--en'>
+      SORRY，THE SHOP YOU ARE LOOKING IS CLOSED RIGHT NOW,
+      <br />
+      PLEASE TRY AGAIN LATER.
+    </p>
+    
+  </div>
+</div>

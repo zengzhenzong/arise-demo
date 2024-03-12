@@ -1,0 +1,34 @@
+
+<div class="sl-card" id={{id}}>
+  <div class="sl-card__head">
+    {{ slot_content 'prefix' }}
+
+    <div class="sl-card__head--context">
+      <h2>{{title}}</h2>
+      {{#if desc}}
+        <p>{{desc}}</p>
+      {{/if}}
+    </div>
+    
+    {{#if editable }}
+      <div class="sl-card__head--edit-icon" data-show="detail">
+        {{snippet 'icons/icon_edit'}}
+      </div>
+    {{/if}}
+
+    {{ slot_content 'surfix' }}
+  </div>
+
+  <div class="sl-card__content">
+    {{ slot_content }}
+  </div>
+
+  {{#if editable }}
+    <div class="sl-card__footer" data-show="edit">
+      <div class="sl-card__footer--buttons">
+        <button class="btn btn-outline-primary btn-sm sl-card__footer--btn-cancel" type="button">{{ t 'customer.general.cancel' }}</button>
+        <button class="btn btn-primary btn-sm sl-card__footer--btn-save" type="button">{{ t 'customer.general.save' }}</button>
+      </div>
+    </div>
+  {{/if}}
+</div>

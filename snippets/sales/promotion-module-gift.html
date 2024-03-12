@@ -1,0 +1,21 @@
+{{ assign 'promotion' _promotion}}
+{{ assign "giftPromotionWarper" (object_create class="discountText")}}
+{{ assign 'gift_promotion_config' (sales_promotion_reminder_translate data (object_create warper=giftPromotionWarper))}}
+{{ assign 'selectText' (t 'sales.gift.select')}}
+{{ assign 'promotionBenefit' (itemAt promotion.promotionBenefitList 0) }}
+
+<div class="cart-sku-list-promotion-module salesPluginGift__promotion" data-widget-scope="gift" data-activityseq="{{promotion.activitySeq}}"
+  data-promotionseq="{{promotion.promotionSeq}}">
+  {{snippet 'sales/sales-promotion-custom-style' promotion=promotion isMobile=request.is_mobile}}
+  <div class="notranslate">
+    {{noTranslationHTML (javascript_template promotionBenefit.extMap.bannerText gift_promotion_config.params (toRegex '\{\s*(\w+)\s*\}' flags="g"))}}
+  </div>
+  <span class="cart-sku-list-promotion-module-arrow salesPluginGift__selectIcon">
+    {{#if (and (is trade_cart_type 'main') (isFalsey is-mobile))}}
+      {{selectText}}
+    {{/if}}
+    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 12 12" fill="none" class="icon directional">
+      <path d="M4 11L9 6L4 1" stroke-width="1.5" stroke-linecap="round" />
+    </svg>
+  </span>
+</div>

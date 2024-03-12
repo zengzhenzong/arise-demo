@@ -1,0 +1,94 @@
+{{assign 'settings' section.settings}}
+{{assign 'toolbar_menu_data' (get settings.toolbar_menu navigations) }}
+{{assign 'show_locale_selector_position' settings.show_locale_selector_position}}
+{{#or (boolean show_locale_selector_position '===' 'top') (and (isTruthy toolbar_menu_data) (gt (size toolbar_menu_data.nodeTree) 0)) settings.toolbar_social}}
+<div class="header__top"  data-color-scheme="{{color_scheme}}">
+    <div class="container{{#if settings.show_tool_full}}-fluid{{/if}} g-2 g-md-5 toolbar d-none d-lg-flex {{#if section.settings.header_full_width}}header__full_screen_width{{/if}}">
+        {{#if (isTruthy toolbar_menu_data)}}
+            <ul class="toolbar_menu">
+                {{#each toolbar_menu_data.nodeTree}}
+                    <li class="toolbar_menu--item">
+                        {{{assign "navItem" (navLink this global.request.uri.query global.request.locale global.all_collections)}}}
+                        <a class="toolbar_menu--link" {{{navItem.hrefAttr}}}>{{navItem.name}}</a>
+                    </li>
+                {{/each}}
+            </ul>
+        {{/if}}
+        {{#if settings.toolbar_social}}
+            <div class="toolbar_social">
+                {{#if (isTruthy theme.settings.social_facebook_link)}}
+                    <a class="toolbar_social--item" href="{{theme.settings.social_facebook_link}}" target="_blank" rel="noopener">
+                        {{ snippet 'icons/icon_toolbar_social_fb' }}
+                    </a>
+                {{/if}}
+
+                {{#if (isTruthy theme.settings.social_twitter_link)}}
+                    <a class="toolbar_social--item" href="{{theme.settings.social_twitter_link}}" target="_blank" rel="noopener">
+                      {{ snippet 'icons/icon_toolbar_social_twitter' }}
+                    </a>
+                {{/if}}
+
+                {{#if (isTruthy theme.settings.social_pinterest_link)}}
+                    <a class="toolbar_social--item" href="{{theme.settings.social_pinterest_link}}" target="_blank" rel="noopener">
+                      {{ snippet 'icons/icon_toolbar_social_pin' }}
+                    </a>
+                {{/if}}
+
+                {{#if (isTruthy theme.settings.social_instagram_link)}}
+                    <a class="toolbar_social--item" href="{{theme.settings.social_instagram_link}}" target="_blank" rel="noopener">
+                      {{ snippet 'icons/icon_toolbar_social_ig' }}
+                    </a>
+                {{/if}}
+
+                {{#if (isTruthy theme.settings.social_snapchat_link)}}
+                    <a class="toolbar_social--item" href="{{theme.settings.social_snapchat_link}}" target="_blank" rel="noopener">
+                      {{ snippet 'icons/icon_toolbar_social_snapchat' }}
+                    </a>
+                {{/if}}
+
+                {{#if (isTruthy theme.settings.social_tiktok_link)}}
+                    <a class="toolbar_social--item" href="{{theme.settings.social_tiktok_link}}" target="_blank" rel="noopener">
+                      {{ snippet 'icons/icon_toolbar_social_tiktok' }}
+                    </a>
+                {{/if}}
+
+                {{#if (isTruthy theme.settings.social_youtube_link)}}
+                    <a class="toolbar_social--item" href="{{theme.settings.social_youtube_link}}" target="_blank" rel="noopener">
+                      {{ snippet 'icons/icon_toolbar_social_youtube' }}
+                    </a>
+                {{/if}}
+
+                {{#if (isTruthy theme.settings.social_linkedin_link)}}
+                    <a class="toolbar_social--item" href="{{theme.settings.social_linkedin_link}}" target="_blank" rel="noopener">
+                      {{ snippet 'icons/icon_toolbar_social_linkedin' }}
+                    </a>
+                {{/if}}
+
+                {{#if (isTruthy theme.settings.social_whatsapp_link)}}
+                    <a class="toolbar_social--item" href="{{theme.settings.social_whatsapp_link}}" target="_blank" rel="noopener">
+                      {{ snippet 'icons/icon_toolbar_social_whatsapp' }}
+                    </a>
+                {{/if}}
+
+                {{#if (isTruthy theme.settings.social_line_link)}}
+                    <a class="toolbar_social--item" href="{{theme.settings.social_line_link}}" target="_blank" rel="noopener">
+                      {{ snippet 'icons/icon_toolbar_social_line' }}
+                    </a>
+                {{/if}}
+
+                {{#if (isTruthy theme.settings.social_kakao_link)}}
+                    <a class="toolbar_social--item" href="{{theme.settings.social_kakao_link}}" target="_blank" rel="noopener">
+                      {{ snippet 'icons/icon_toolbar_social_kakao' }}
+                    </a>
+                {{/if}}
+            </div>
+        {{/if}}
+
+        {{#if show_locale_selector_position 'top'}}
+        <div class="toolbar__select">
+            {{snippet 'header/locale-currency' settings=settings position="header"}}
+        </div>
+        {{/if}}
+    </div>
+</div>
+{{/or}}

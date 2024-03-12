@@ -1,0 +1,24 @@
+{{ assign 'summation_key_alias' (object_create) }}
+{{snippet 'trade/commons/summation_key_alias' data=summation_key_alias}}
+
+<div id="trade-summations" class="trade_summations body3">
+  {{#trade_with_summations pageType='cart' keyAlias=summation_key_alias}}
+    
+    {{#each summations}}
+      {{include
+        'snippets/trade/trade_summations_fee'
+        label=(cond customLabel customLabel (t label))
+        key=key
+        value=value
+        showWithZeroValue=showWithZeroValue
+        showReduce=showReduce
+        suffixCls=suffixCls
+        tips=(t tips)
+        showTips=showTips
+        showDetail=showDetail
+        memberPointInfo=memberPointInfo
+        hideCls=hideCls
+      }}
+    {{/each}}
+  {{/trade_with_summations}}
+</div>

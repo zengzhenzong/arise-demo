@@ -1,0 +1,7 @@
+{{#if payChannelName.type '==' 'i18n_code'}}
+  {{t payChannelName.value}}
+{{else if (boolean payMethod '==' "GiftCard")}}
+  {{payMethodName.value}}-(••••{{defaultDesensitizedPayerAccount}})
+{{else}}
+  {{payChannelName.value}}
+{{/if}}

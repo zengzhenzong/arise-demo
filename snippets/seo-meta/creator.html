@@ -1,0 +1,25 @@
+
+
+{{#if templateAlias '===' 'Home'}}
+  {{snippet 'seo-meta/home' }}
+{{else if templateAlias '===' 'BlogsDetail'}}
+  {{snippet 'seo-meta/blog-detail' }}
+{{else if templateAlias '===' 'BlogsList'}}
+  {{snippet 'seo-meta/blog-list' }}
+{{else if templateAlias '===' 'Page'}}
+  {{snippet 'seo-meta/page' }}
+{{else if templateAlias '===' 'Activity'}}
+  {{snippet 'seo-meta/activity' }}
+{{else if (boolean (boolean templateAlias '===' 'ProductsDetail') "||" (boolean templateAlias '===' 'PreviewProductsDetail'))}}
+  {{ snippet 'seo-meta/product'}}
+{{else if templateAlias '===' 'Products'}}
+  {{ snippet 'seo-meta/collections'}}
+{{else if templateAlias '===' 'AllCollections'}}
+  {{ snippet 'seo-meta/collections-all'}}
+{{else if templateAlias '===' 'ProductsSearch'}}
+  {{ snippet 'seo-meta/search'}}
+  
+{{else}}
+  
+  {{snippet 'seo-meta/default' }}
+{{/if}}

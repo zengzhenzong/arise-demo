@@ -1,0 +1,43 @@
+<div class="customer_order_summations_fee  {{hideCls}} {{#if showWithZeroValue '!=' true}} {{#if value '==' 0}} hide {{/if}}  {{/if}}" data-key="{{key}}"
+  {{add_dataset 'value' value }} {{add_dataset 'showWithZeroValue' showWithZeroValue }} {{add_dataset 'freeShipTxt' freeShipTxt }}
+  {{add_dataset 'nextStepCalcTxt' nextStepCalcTxt }}>
+  <div class="textLeft {{prefixCls}}">
+    {{#if key '==' "giftCardInfos" }}
+      <span  class="trade_summations_fee__tips">
+        {{t 'trade.reduction_code.giftcard'}} <span class="trade_gift_card_code">(••••{{{lastCharacters}}})</span> 
+      </span>
+    {{else}}
+      {{#if key '==' "discountAmountExt" }}
+        {{label}}{{cond (boolean pageData.priceInfo.discountAmountExtName) (prepend pageData.priceInfo.discountAmountExtName ' - ') ''}}
+      {{else}}
+        {{label}}
+      {{/if}}
+    {{/if}}
+  </div>
+
+  <div class="customer_order_summations__amount textRight isolate {{#if suffixCls }} {{suffixCls}} {{else}}black{{/if}}">
+    <span style="display:flex;">
+      <span class="customer_order_summations__amount_reduce {{#if showReduce }} {{else}} hide {{/if}}">-</span>
+      <span class="customer_order_summations__amount-box">
+        <span class="customer_order_summations__amount-price">
+          {{#if (typeOf value) '==' 'number' }}
+            <span class="notranslate no-change isolate" data-amount="{{value}}">{{money_with_currency value code=@root.basicInfo.settleCurrencyCode}}</span>
+          {{else }}
+            
+            {{t value}}
+          {{/if}}
+        </span>
+      </span>
+    </span>
+    {{#if key '==' 'deductMemberPointAmount' }}
+      <div class="customer_order_summations_remark">
+        {{t 'transaction.refund.cost_points' value=pageData.priceInfo.deductMemberPointNum}}
+      </div>
+    {{else if (boolean  key '==' 'settleSumAmount' '&&' pageData.basicInfo.taxesIncluded)}}
+      
+      <div class="customer_order_summations_remark">
+        {{ noTranslationHTML (t 'cart.order.tax_included' price=(javascript_template '<span class="notranslate no-change isolate" data-amount="${amount}">${num}</span>' num=(money_with_currency pageData.priceInfo.taxesIncludedSumAmount code=@root.basicInfo.settleCurrencyCode) amount=pageData.priceInfo.taxesIncludedSumAmount) ) }}
+      </div>
+    {{/if}}
+  </div>
+</div>

@@ -1,0 +1,15 @@
+{{assign "routesList" (default routesList (JSONparse "[]"))}}
+<div class="{{classes}} blog-breadcrumb body4">
+  {{#each routesList}}
+    <div class="blog-breadcrumb-link" {{#if @last}}style="opacity: .6;"{{/if}}>
+      {{#if link}}
+        <a href="{{redirect_to link}}" alt="{{name}}">
+          {{name}}
+        </a>
+      {{else}}{{name}}{{/if}}
+    </div>
+    {{#if (not @last)}}
+      <span class="blog-breadcrumb-separator">/</span>
+    {{/if}}
+  {{/each}}
+</div>

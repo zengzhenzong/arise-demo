@@ -1,0 +1,25 @@
+{{preload_state 'pageInfo.originalPath'}}
+{{assign 'prefix' 'stage__policy__page'}}
+<div class='container {{prefix}}--container'>
+    {{#if pageInfo.handle '===' '/policies/refund-policy'}}
+      <h1 class='title3'>{{t 'general.policy.refund'}}</h1>
+    {{/if}}
+    {{#if pageInfo.handle '===' '/policies/privacy-policy'}}
+    <h1 class='title3'>{{t 'general.policy.privacy'}}</h1>
+    {{/if}}
+    {{#if pageInfo.handle '===' '/policies/terms-of-service'}}
+    <h1 class='title3'>{{t 'general.policy.service'}}</h1>
+    {{/if}}
+    {{#if pageInfo.handle '===' '/policies/shipping-policy'}}
+    <h1 class='title3'>{{t 'general.policy.shipping'}}</h1>
+    {{/if}}
+    <div class="body3">
+        <style>
+            .policy-page-render-container iframe{max-width:100%}.policy-page-render-container img{height:auto;max-width:100%}.policy-page-render-container table{word-break: initial;}
+        </style>
+        <div class="policy-page-render-container sl-richtext">
+            <div>{{{rich_editor_format pageInfo.config.text lazyLoadIframe=true}}}</div>
+        </div>
+    </div>
+</div>
+

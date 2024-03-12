@@ -1,0 +1,189 @@
+{{#if request.document_direction '===' 'rtl'}}
+  {{ combine_asset_tag 'stage/video/index.rtl.css' inline=true}}
+{{else}}
+  {{ combine_asset_tag 'stage/video/index.css' inline=true}}
+{{/if}}
+<!-- stage/video/index.js -->
+  
+  {{ combine_asset_tag 
+    'theme-shared/utils/sectionsLoad/index.js'
+    'stage/video/utils/Player.js'
+    'commons/video/LibraryLoader.js'
+    'commons/video/state.js'
+    'commons/video/YoutubeReadyWatcher.js'
+    'stage/video/utils/YouTube.js'
+    'stage/video/utils/LibraryLoader.js'
+    'stage/video/utils/VimeoPlayer.js'
+    'commons/video/AutoplayChecker.js'
+    'commons/video/VideoJs.js'
+    'commons/utils/init-when-visible.js'
+    'stage/video/utils/video.js'
+    'stage/video/index.js'
+    type="text/javascript"
+    defer=true
+  }}
+
+
+{{ assign 'full_width' section.settings.full_width }}
+
+{{ snippet 'global-border-shadow-style' color_scheme=section.settings.color_scheme sectionId=section.id type='media' }}
+
+<section class="__sl-custom-track-stage-video video__container color-scheme-{{ section.settings.color_scheme }}{{#if full_width}} video__full-width{{/if}} section-gap{{#if section.settings.color_scheme '!==' ''}}--padding{{/if}}">
+  <div class="video__section {{#if (isFalsey full_width)}}container{{/if}}">
+    {{#if section.settings.title}}
+      <h2 class="video__title title4 section-title text-center {{#if full_width}}container{{/if}}">{{ section.settings.title }}</h2>
+    {{/if}}
+
+    
+    {{ object_set section.settings 'video_url' section.settings.url }}
+    <div
+      class="global-media-border-shadow"
+      data-id="{{ section.id }}"
+      data-section-id="{{ section.id }}"
+      data-section-type="video"
+    >
+      {{ snippet 'video-item' video_cover_img_class=(append 'image-position-' section.settings.background_position) }}
+    </div>
+  </div>
+</section>
+
+{{#schema}}
+{
+  "name": "t:sections.video.name",
+  "icon": "video",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.video.settings.title.label",
+      "default": "Video"
+    },
+    {
+      "type": "video_text",
+      "id": "url",
+      "format": "video",
+      "placeholder": "https://www.youtube.com/watch?v=V7BEzkRBp_g",
+      "info": "t:sections.video.settings.url.info",
+      "label": "t:sections.video.settings.url.label"
+    },
+    {
+      "type": "switch",
+      "id": "autoplay",
+      "label": "t:sections.video.settings.autoplay.label",
+      "info": "t:sections.video.settings.autoplay.info",
+      "default": false
+    },
+    {
+      "type": "switch",
+      "id": "quiet",
+      "label": "t:sections.video.settings.quiet.label",
+      "default": true
+    },
+    {
+      "type": "switch",
+      "id": "loop",
+      "label": "t:sections.video.settings.loop.label",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "cover",
+      "label": "t:sections.video.settings.cover.label"
+    },
+    {
+      "type": "select",
+      "id": "background_position",
+      "label": "t:sections.video.settings.background_position.label",
+      "default": "center",
+      "options": [
+        {
+          "value": "left-top",
+          "label": "t:sections.video.settings.background_position.options__0.label"
+        },
+        {
+          "value": "top",
+          "label": "t:sections.video.settings.background_position.options__1.label"
+        },
+        {
+          "value": "right-top",
+          "label": "t:sections.video.settings.background_position.options__2.label"
+        },
+        {
+          "value": "left",
+          "label": "t:sections.video.settings.background_position.options__3.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.video.settings.background_position.options__4.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.video.settings.background_position.options__5.label"
+        },
+        {
+          "value": "left-bottom",
+          "label": "t:sections.video.settings.background_position.options__6.label"
+        },
+        {
+          "value": "bottom",
+          "label": "t:sections.video.settings.background_position.options__7.label"
+        },
+        {
+          "value": "right-bottom",
+          "label": "t:sections.video.settings.background_position.options__8.label"
+        }
+      ]
+    },
+    {
+      "type": "switch",
+      "id": "full_width",
+      "label": "t:sections.video.settings.full_width.label",
+      "default": false
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "t:sections.video.settings.color_scheme.label",
+      "default": "",
+      "options": [
+        {
+          "value": "",
+          "label": "t:sections.video.settings.color_scheme.options__0.label"
+        },
+        {
+          "value": "1",
+          "label": "t:sections.video.settings.color_scheme.options__1.label"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.video.settings.color_scheme.options__2.label"
+        },
+        {
+          "value": "3",
+          "label": "t:sections.video.settings.color_scheme.options__3.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.video.presets.presets__0.name",
+      "icon": "video",
+      "category_index": 3,
+      "category": "t:sections.video.presets.presets__0.category",
+      "settings": {
+        "title": "Video",
+        "loop": false,
+        "background_position": "center",
+        "color_scheme": "",
+        "full_width": false,
+        "cover": {
+          "url": ""
+        }
+      }
+    }
+  ]
+}
+{{/schema}}
+
+

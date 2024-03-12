@@ -1,0 +1,52 @@
+{{ assign 'summation_key_alias' (object_create) }}
+{{snippet 'trade/commons/summation_key_alias' data=summation_key_alias}}
+
+<div id="customer-order-summations" class="customer_order_summations">
+  {{#trade_with_summations pageType=pageType pageData=pageData keyAlias=summation_key_alias}}
+    <div class="customer_order_summations-top">
+      <div class="customer_order_summations-top_box">
+        {{#each summations}}
+          {{include
+            'snippets/customer/order/detail/summations_fee'
+            label=(cond customLabel customLabel (t label))
+            key=key
+            value=value
+            showWithZeroValue=showWithZeroValue
+            showReduce=showReduce
+            suffixCls=suffixCls
+            freeShipTxt=(t freeShipTxt)
+            pageData=@root.pageData
+          }}
+        {{/each}}
+        
+        {{#if giftCardInfos.length '>' 0}}
+          {{#each giftCardInfos}}
+              {{include
+               'snippets/customer/order/detail/summations_fee'
+                key='giftCardInfos'
+                value=deductAmount
+                showReduce='true'
+                lastCharacters=lastCharacters
+                pageType=@root.pageType
+                pageData=@root.pageData
+              }}
+          {{/each}}
+        {{/if}}
+      </div>
+    </div>
+
+    <div class="line"></div>
+
+    
+    {{include
+      'snippets/customer/order/detail/summations_fee'
+      label=(t 'transaction.payment.total_sum')
+      key='settleSumAmount'
+      value=@root.pageData.priceInfo.totalAmount
+      showWithZeroValue=true
+      prefixCls=(append (cond @root.pageData.basicInfo.taxesIncluded 'pointAmountLabel ' '') 'settleSumAmount')
+      suffixCls=(append (cond @root.pageData.basicInfo.taxesIncluded 'pointAmount ' '') 'settleSumAmount')
+    pageData=@root.pageData
+    }}
+  {{/trade_with_summations}}
+</div>

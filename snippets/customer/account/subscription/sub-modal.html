@@ -1,0 +1,32 @@
+
+{{#snippet
+  'product/commons/base-modal'
+  modalId=id
+  containerClassName="customer-center-modal__container customer-center-sub-modal__container"
+}}
+  <div class="customer-center-sub-modal__content">
+    {{#if type 'email'}}
+      <div class="customer-center-sub-modal__title">{{ t 'customer.subscription.email_subscription_text' }}</div>
+    {{/if}}
+    {{#if type 'phone'}}
+      <div class="customer-center-sub-modal__title">{{ t 'customer.subscription.phone_subscription_text' }}</div>
+    {{/if}}
+
+    <form class="customer-center-sub-modal__form" id={{ append id '-form' }}>
+      {{#if type 'email'}}
+        {{snippet 'customer/form-item/username' types=(split 'email' ',') }}
+      {{/if}}
+
+      {{#if type 'phone'}}
+        {{snippet 'customer/form-item/username' types=(split 'phone' ',') }}
+      {{/if}}
+
+      {{#snippet 'customer/base/sl-button' class="submit-button" block=true }}
+        {{ t 'customer.subscription.save_button' }}
+      {{/snippet}}
+    </form>
+    <div class="customer-center-sub-modal__cancel">
+      <span>{{ t 'customer.subscription.subscription_cancel_text' }}</span>
+    </div>
+  </div>
+{{/snippet}}

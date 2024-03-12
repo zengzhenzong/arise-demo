@@ -1,0 +1,5 @@
+{{#if request.document_direction '===' 'rtl'}}
+  {{ combine_asset_tag 'product/collections-all/style/index.rtl.css' inline=true}}
+{{else}}
+  {{ combine_asset_tag 'product/collections-all/style/index.css' inline=true}}
+{{/if}}

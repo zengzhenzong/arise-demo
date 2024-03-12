@@ -1,0 +1,100 @@
+<script>
+  if (!window.SL_ReportArgsMap) {
+    window.SL_ReportArgsMap = {}
+  }
+
+  if (!window.SL_ReportArgsMap.GAR) {
+    window.SL_ReportArgsMap.GAR = {
+      sku_id: {}
+    }
+  }
+
+  window.SL_ReportArgsMap.GAR.sku_id = Object.assign(window.SL_ReportArgsMap.GAR.sku_id, {{{JSONstringify (default variants.gmc_sku_feed_id '{}')}}} );
+
+</script>
+{{ assign statePrefix product }}
+{{ preload_state statePrefix }}
+
+
+{{#if templateAlias '===' 'PreviewProductsDetail'}}
+  {{ assign 'isPreviewProduct' true }}
+{{else}}
+  {{ assign 'isPreviewProduct' false }}
+{{/if}}
+
+
+{{ assign 'initSku' (product_default_sku product.sku.skuList product.spu.soldOut request.uri.query.sku true product.spu.inquiry isPreviewProduct) }}
+{{ assign 'productPrice' (product_sku_price (default initSku.selectSku initSku.minPriceSku)) }}
+{{ assign 'showMemberMark' (default initSku.selectSku.showMemberMark initSku.minPriceSku.showMemberMark) }}
+
+{{ assign 'discount_text' null }}
+
+{{#if productPrice.originPrice}}
+  {{#if theme.settings.product_discount_style '===' 'number'}}
+    {{ assign 'discount_text' (subtract productPrice.originPrice productPrice.salesPrice) }}
+  {{else}}
+    {{ assign 'discount_text' (round (multiply (subtract 1 (divide productPrice.salesPrice productPrice.originPrice)) 100)) }}
+  {{/if}}
+{{/if}}
+
+{{ assign 'grayFooterCls' 'overflow-auto-scroll' }}
+{{#if paymentButtonConfig.grayscaleButtonLocation}}
+  {{#contains paymentButtonConfig.grayscaleButtonLocation 'productDetail'}}
+    {{ assign 'grayFooterCls' '' }}
+  {{/contains}}
+{{/if}}
+<div class="quick-add-modal__wrapper">
+  <div class="quick-add-modal__body" data-scroll-lock-scrollable>
+    <div data-ssr-plugin-title-top></div>
+    <div class="quick-add-mpdal-sku">
+      {{ snippet 'product/commons/sku-trade/sku-trade' attr=(product_sku_map2array product.sku.skuAttributeMap initSku.selectSku) id=id productSkuStyle=theme.settings.product_sku_style selectSkuSeq=initSku.selectSku.skuSeq }}
+    </div>
+
+    {{#if (and (isFalsey product.spu.inquiry) theme.settings.product_count_​selector)}}
+      <div class="products-detail-quantity">
+        {{ snippet 'product/detail/product-quantity' selectSku=initSku.selectSku id=id className='' }}
+      </div>
+    {{/if}}
+
+    <div class="product-price">
+      <div class="price body-font body2 product-info-price_{{ id }}" product_discount="{{ theme.settings.product_discount }}">
+        {{#if (boolean initSku.selectSku.quantity_price_breaks.length)}}
+          {{ assign 'last_break' (last initSku.selectSku.quantity_price_breaks) }}
+          <span class="product-price-sales_{{ id }} isolate notranslate fw-bold product-price-item">{{ money_exchange_convert_with_currency last_break.price }} - {{ money_exchange_convert_with_currency productPrice.salesPrice }}</span>
+          <span class="product-price-vip_{{ id }} vipPrice hide" data-vip-tag="big"></span>
+          {{ snippet 'product/detail/product-tax' }}
+          <span class="originPrice notranslate isolate fw-bold product-price-item product-price-origin_{{ id }} hide"></span>
+          <span class="discount body4 product-price-discount_{{ id }} hide" product_discount_style="{{ theme.settings.product_discount_style }}"></span>
+        {{else}}
+          <span class="product-price-sales_{{ id }} isolate notranslate fw-bold product-price-item">
+            {{ money_exchange_convert_with_currency productPrice.salesPrice }}
+          </span>
+          <span class="product-price-vip_{{ id }} vipPrice {{ cond showMemberMark '' 'hide' }}" data-vip-tag="big"></span>
+
+          {{ snippet 'product/detail/product-tax' }}
+          <span
+            class="originPrice notranslate isolate fw-bold product-price-item product-price-origin_{{ id }} {{#if productPrice.originPrice '<=' productPrice.salesPrice}}hide{{/if}}">
+            {{ money_exchange_convert_with_currency productPrice.originPrice }}
+          </span>
+          {{#if theme.settings.product_discount}}
+            <span
+              class="discount body4 product-price-discount_{{ id }} {{#or (boolean productPrice.originPrice '<=' productPrice.salesPrice) spuInfo.soldout (boolean discount_text '<=' 0)}}hide{{/or}}"
+              product_discount_style="{{ theme.settings.product_discount_style }}">
+              {{#if (and (is (typeOf productPrice.originPrice) 'number') (is (typeOf productPrice.salesPrice) 'number'))}}
+                  {{#if theme.settings.product_discount_style '===' 'number'}}
+                    {{ assign 'priceVal' (money_exchange_convert_with_currency discount_text) }}
+                    {{{ t 'products.product_list.save' priceDom=(append '<span class="notranslate isolate">' priceVal '</span>') }}}
+                  {{else}}
+                    {{ t 'products.product_list.save_ratio' price=discount_text }}
+                  {{/if}}
+              {{/if}}
+            </span>
+          {{/if}}
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  <div class="quick-add-modal__footer {{ grayFooterCls }}" data-scroll-lock-scrollable>
+    {{ snippet 'product/detail/product-button' isSoldOut=(or product.spu.soldOut initSku.selectSku.soldOut) id=id case='quick_add_modal' }}
+  </div>
+</div>

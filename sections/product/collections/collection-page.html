@@ -1,0 +1,485 @@
+---
+products:
+  limit: {{ section.settings.per_page_num }}
+  cursor: {{ cond (isFalsey request.uri.query.loadMore) (cond section.settings.infinite_scroll 1 request.uri.query.page_num) request.uri.query.page_num }}
+
+collection_products_count:
+  enable: false
+all_collections:
+  need_first_product: {{boolean theme.settings.collection_grid_image "==" "product"}}
+---
+
+{{assign 'isPreview' request.design_mode }}
+{{assign 'perPageNum' section.settings.per_page_num }}
+{{assign 'calc_page_size'  (toInt (default request.uri.query.page_size perPageNum))}}
+{{assign 'itemNumByRow' section.settings.pc_list_layout }}
+{{assign 'slice_products_list' products.list }}
+{{assign 'gripType' 'small_grid' }}
+{{assign 'productSortation' (object_create id=sortationId sortation=sortation ) }}
+{{assign 'infiniteScroll' section.settings.infinite_scroll}}
+{{assign 'infiniteScrollNeedLoadMore' (isTruthy request.uri.query.loadMore)}}
+{{assign 'child_category_list' (navigation_to_category all_collections navigations.head sortationId )}}
+{{assign 'subTitleShowType' section.settings.product_sub_title}}
+{{assign 'mobileListLayout' section.settings.mobile_list_layout }}
+{{assign 'urlMobileColumn' request.uri.query.mobile_grid_type }}
+{{assign 'validColumn' (arrayify (JSONparse '["1","2"]')) }}
+{{assign 'userHistoryListGrid' (cond (inArray validColumn urlMobileColumn) urlMobileColumn undefined) }}
+{{assign 'mobileGripType' (default userHistoryListGrid mobileListLayout) }}
+
+{{#if (isFalsey infiniteScrollNeedLoadMore) }}
+  {{ preload_state 'products' }}
+  {{ preload_state 'productSortation' }}
+{{/if}}
+ {{assign 'mb_padding_top' 20 }}
+{{#and (if section.settings.category_desc_position '===' 'top') (if (size sortation.sortation.description) '>' 0 )}}
+  {{assign 'mb_padding_top' 10 }}
+{{/and}}
+<style>
+    #shopline-section-{{section.id}} .section-gap {
+      padding-top: 25px;
+      padding-bottom: 0px;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  @media (max-width: 749.98px) {
+    #shopline-section-{{section.id}} .section-gap {
+      padding-top: {{mb_padding_top}}px;
+      padding-bottom: 0px;
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+</style>
+
+{{#if (isFalsey infiniteScrollNeedLoadMore) }}
+<div id="collectionsAjaxInner">
+  <div
+    class="container section-gap product-list-main"
+    data-section-type="collections-page"
+    data-section-id="{{ section.id }}"
+  >
+    <div class="row g-4">
+      <div class="product-list-main-box">
+        <div class="product-list-filter-main-container">
+          <section class="product-list-filter">
+            {{snippet 'product/collections/collections-menu' settings=section.settings blocks=(product_blocks_order_translate section 'blocks' 'block_order')}}
+          </section>
+        </div>
+        <div class="product-collection-page-con">
+          <div class="product-list-list shopline-element-product-list __sl-custom-track-{{cond productSortation.id productSortation.id 'all-products'}}" data-ssr-product-list-left>
+            <div class="product-list-description-category-top">
+              {{#if (boolean (boolean section.settings.category_desc_position '===' 'top') '&&' sortationId) }}
+                {{#if (length (trim sortation.sortation.description)) '>' 0}}
+                  <div class="product-list-description-top">
+                    {{snippet 'product/collections/collections_description' }}
+                  </div>
+                {{/if}}
+              {{/if}}
+            </div>
+            <div class="product-list-filter-line"></div>
+            <div class="product-list-list-container" id="js-product-collections_filter_container">
+              <div class="product-list-list-header">
+                <div class="product-list-list-header-filter" id="product-list-list-header-filter">
+                  {{snippet 'product/collections/collections-drawer-filter-icon' }}
+                </div>
+                <div class="product-list-filter-container">
+                  <div class="product-list-show-product-number-m body3" id="product-list-list-header-left-m">
+                    {{#if products.realTotal '>' 1}}
+                        {{t 'products.product_list.more__product_num' num=products.realTotal}}
+                      {{else}}
+                        {{t 'products.product_list.one_product_num' num=products.realTotal}}
+                      {{/if}}
+                  </div>
+                  {{#if section.settings.sorter_enable}}
+                    <div class="product-list-sort-by">
+                      <div class="product-list-mobile-sort-by body3">
+                        {{snippet 'icons/icon_list_sort_by'}}
+                        <span>{{ t "products.facets.sort_button" }}</span>
+                      </div>
+                      {{snippet 'product/collections/collections-sort'}}
+                    </div>
+                  {{else}}
+                    <div class="product_sort_by_placeHolder"></div>
+                  {{/if}}
+                  {{#if section.settings.mobile_show_style_switch}}
+                    <div class="d-flex d-md-none product-grid-select-container">
+                      <div class="product-grid-select {{cond (boolean mobileGripType '==' '2') 'active' : ''}}" data-column="2">
+                        {{snippet 'icons/icon_2_column'}}
+                      </div>
+                      <div class="product-grid-select {{cond (boolean mobileGripType '==' '1') 'active' : ''}}" data-column="1">
+                        {{snippet 'icons/icon_1_column'}}
+                      </div>
+                    </div>
+                  {{/if}}
+                </div>
+              </div>
+            </div>
+
+            <div class="product-list-item-list" data-ssr-product-list-top>
+              {{#if (boolean products.list.length '>' 0)}}
+                {{snippet 'product/commons/product-item-list' subTitleShowType=subTitleShowType listClassName="product-infinite-list-container" infiniteScroll=infiniteScroll effectPage="productList" gripType=gripType className='__sl-custom-track-product-list-item' colNum=itemNumByRow listData=slice_products_list pageSize=calc_page_size pageNum=products.pageNum total=products.total mbColNum=mobileGripType }}
+              {{else}}
+                <span class="body3">{{t "products.product_list.no_product"}}</span>
+              {{/if}}
+            </div>
+            {{#if (and (isFalsey products.lastPage) infiniteScroll)}}
+              <div class="product-list-infinite-scroll-anchor" data-pageNum="{{ products.pageNum }}"></div>
+            {{/if}}
+            {{#if infiniteScroll}}
+              <div class="product-list-infinite-scroll-loading">
+                <div class="infinite-loading-icon">{{ snippet 'icons/icon_infinite_loading'}}</div>
+                <span class="body3">{{t 'products.product_list.load_more_tip'}}</span>
+              </div>
+              {{#and (isTruthy products.lastPage) (boolean products.realTotal '>' 0)}}
+                <div class="product-infinite-list-lastPage body3">{{t 'products.product_list.more__product_num' num=products.realTotal}}</div>
+              {{/and}}
+            {{/if}}
+            <div class="product-list-description-category">
+              {{#if (boolean (boolean section.settings.category_desc_position '===' 'bottom') '&&' sortationId '&&' sortation.sortation.description ) }}
+                <div class="product-list-description-bottom">
+                  {{snippet 'product/collections/collections_description' }}
+                </div>
+              {{/if}}
+            </div>
+          </div>
+        </div>
+      </div>
+      {{#if infiniteScroll}}
+        <input type="hidden" class="product-list-is-infinite-scroll-mode">
+      {{/if}}
+    </div>
+  </div>
+
+
+  {{snippet 'product/product-recommend' }}
+</div>
+{{else}}
+  {{#each products.list as |item|}}
+    <div class="col product-item-list">
+      {{snippet 'product/commons/product-item' notAllowLoadAssets=true hoverZIndex=2 previewQuery=../previewQuery spu=item forbiddenBtn=../forbiddenBtn index=@index className=../className }}
+    </div>
+  {{/each}}
+  {{#if (isTruthy products.lastPage)}}
+    <div class="product-infinite-list-lastPage body3">{{t 'products.product_list.more__product_num' num=products.realTotal}}</div>
+  {{/if}}
+{{/if}}
+
+
+
+{{#schema}}
+{
+  "name": "t:sections.product_collections_collection-page.name",
+  "settings": [
+    {
+      "type": "select",
+      "id": "category_desc_position",
+      "label": "t:sections.product_collections_collection-page.settings.category_desc_position.label",
+      "options": [
+        {
+          "value": "top",
+          "label": "t:sections.product_collections_collection-page.settings.category_desc_position.options__0.label"
+        },
+        {
+          "value": "bottom",
+          "label": "t:sections.product_collections_collection-page.settings.category_desc_position.options__1.label"
+        }
+      ],
+      "info": "t:sections.product_collections_collection-page.settings.category_desc_position.info",
+      "default": "top"
+    },
+    {
+      "type": "range",
+      "id": "per_page_num",
+      "label": "t:sections.product_collections_collection-page.settings.per_page_num.label",
+      "default": 16,
+      "min": 8,
+      "max": 48,
+      "step": 4
+    },
+    {
+      "type": "range",
+      "id": "pc_list_layout",
+      "label": "t:sections.product_collections_collection-page.settings.pc_list_layout.label",
+      "default": 4,
+      "min": 1,
+      "max": 5,
+      "step": 1
+    },
+    {
+      "type": "select",
+      "id": "mobile_list_layout",
+      "label": "t:sections.product_collections_collection-page.settings.mobile_list_layout.label",
+      "options": [
+        {
+          "value": 1,
+          "label": "t:sections.product_collections_collection-page.settings.mobile_list_layout.options__0.label"
+        },
+        {
+          "value": 2,
+          "label": "t:sections.product_collections_collection-page.settings.mobile_list_layout.options__1.label"
+        }
+      ],
+      "default": 2
+    },
+    {
+      "type": "switch",
+      "id": "mobile_show_style_switch",
+      "label": "t:sections.product_collections_collection-page.settings.mobile_show_style_switch.label",
+      "default": false
+    },
+    {
+      "type": "switch",
+      "id": "infinite_scroll",
+      "label": "t:sections.product_collections_collection-page.settings.infinite_scroll.label",
+      "default": false
+    },
+    {
+      "type": "switch",
+      "id": "sorter_enable",
+      "label": "t:sections.product_collections_collection-page.settings.sorter_enable.label",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "product_sub_title",
+      "label": "t:sections.product_collections_collection-page.settings.product_sub_title.label",
+      "options": [
+        {
+          "value": "hide",
+          "label": "t:sections.product_collections_collection-page.settings.product_sub_title.options__0.label"
+        },
+        {
+          "value": "fullShow",
+          "label": "t:sections.product_collections_collection-page.settings.product_sub_title.options__1.label"
+        },
+        {
+          "value": "onelineShow",
+          "label": "t:sections.product_collections_collection-page.settings.product_sub_title.options__2.label"
+        },
+        {
+          "value": "twolineShow",
+          "label": "t:sections.product_collections_collection-page.settings.product_sub_title.options__3.label"
+        }
+      ],
+      "default": "hide"
+    },
+    {
+      "type": "group_header",
+      "label": "t:sections.product_collections_collection-page.settings.group_header__0.label"
+    },
+    {
+      "id": "product_image_ratio",
+      "type": "select",
+      "label": "t:sections.product_collections_collection-page.settings.product_image_ratio.label",
+      "options": [
+        {
+          "value": "0",
+          "label": "t:sections.product_collections_collection-page.settings.product_image_ratio.options__0.label"
+        },
+        {
+          "value": "100",
+          "label": "t:sections.product_collections_collection-page.settings.product_image_ratio.options__1.label"
+        },
+        {
+          "value": "133.33",
+          "label": "3:4"
+        },
+        {
+          "value": "75",
+          "label": "t:sections.product_collections_collection-page.settings.product_image_ratio.options__3.label"
+        },
+        {
+          "value": "150",
+          "label": "t:sections.product_collections_collection-page.settings.product_image_ratio.options__4.label"
+        }
+      ],
+      "default": "0"
+    },
+    {
+      "id": "product_fill_type",
+      "type": "select",
+      "label": "t:sections.product_collections_collection-page.settings.product_fill_type.label",
+      "options": [
+        {
+          "value": "contain",
+          "label": "t:sections.product_collections_collection-page.settings.product_fill_type.options__0.label"
+        },
+        {
+          "value": "cover",
+          "label": "t:sections.product_collections_collection-page.settings.product_fill_type.options__1.label"
+        }
+      ],
+      "default": "contain"
+    },
+    {
+      "id": "product_hover_show_next",
+      "type": "switch",
+      "label": "t:sections.product_collections_collection-page.settings.product_hover_show_next.label",
+      "default": false
+    },
+    {
+      "type": "group_header",
+      "label": "t:sections.product_collections_collection-page.settings.group_header__1.label"
+    },
+    {
+      "type": "select",
+      "id": "price_show_type",
+      "label": "t:sections.product_collections_collection-page.settings.price_show_type.label",
+      "info": "t:sections.product_collections_collection-page.settings.price_show_type.info",
+      "options": [
+        {
+          "value": "lowest_price",
+          "label": "t:sections.product_collections_collection-page.settings.price_show_type.options__0.label"
+        },
+        {
+          "value": "price_interval",
+          "label": "t:sections.product_collections_collection-page.settings.price_show_type.options__1.label"
+        },
+        {
+          "value": "from_lowest_price",
+          "label": "t:sections.product_collections_collection-page.settings.price_show_type.options__2.label"
+        }
+      ],
+      "default": "from_lowest_price"
+    },
+    {
+      "id": "show_orgin_price",
+      "label": "t:sections.product_collections_collection-page.settings.show_orgin_price.label",
+      "type": "switch",
+      "default": true
+    },
+    {
+      "type": "switch",
+      "id": "filter_enable",
+      "label": "t:sections.product_collections_collection-page.settings.filter_enable.label",
+      "default": true
+    },
+    {
+      "type": "switch",
+      "id": "support_multiple",
+      "label": "t:sections.product_collections_collection-page.settings.support_multiple.label",
+      "default": false
+    }
+  ],
+  "blocks": [
+    {
+      "type": "tag_filter",
+      "icon": "product",
+      "name": "t:sections.product_collections_collection-page.blocks.tag_filter.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "tag_filter_title",
+          "label": "t:sections.product_collections_collection-page.blocks.tag_filter.settings.tag_filter_title.label",
+          "default": "Filters"
+        },
+        {
+          "type": "tag_picker",
+          "id": "tag_data",
+          "label": "t:sections.product_collections_collection-page.blocks.tag_filter.settings.tag_data.label",
+          "default": {
+            "group": "1",
+            "tags": []
+          }
+        },
+        {
+          "type": "switch",
+          "id": "default_fold",
+          "label": "t:sections.product_collections_collection-page.blocks.tag_filter.settings.default_fold.label",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "child_category",
+      "icon": "productCategories",
+      "name": "t:sections.product_collections_collection-page.blocks.child_category.name",
+      "settings": [
+        {
+          "type": "group_header",
+          "label": "t:sections.product_collections_collection-page.blocks.child_category.settings.group_header__0.label",
+          "info": "t:sections.product_collections_collection-page.blocks.child_category.settings.group_header__0.info"
+        },
+        {
+          "type": "switch",
+          "id": "show_level3_title",
+          "label": "t:sections.product_collections_collection-page.blocks.child_category.settings.show_level3_title.label",
+          "default": false
+        },
+        {
+          "type": "switch",
+          "id": "show_product_num",
+          "label": "t:sections.product_collections_collection-page.blocks.child_category.settings.show_product_num.label",
+          "default": false
+        },
+        {
+          "type": "switch",
+          "id": "default_fold",
+          "label": "t:sections.product_collections_collection-page.blocks.child_category.settings.default_fold.label",
+          "default": false
+        }
+      ],
+      "limit": 1
+    },
+    {
+      "type": "menu",
+      "icon": "navigation",
+      "name": "t:sections.product_collections_collection-page.blocks.menu.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "menu_title",
+          "label": "t:sections.product_collections_collection-page.blocks.menu.settings.menu_title.label"
+        },
+        {
+          "type": "menu_picker",
+          "id": "menu_selector",
+          "label": "t:sections.product_collections_collection-page.blocks.menu.settings.menu_selector.label"
+        },
+        {
+          "type": "switch",
+          "id": "default_fold",
+          "label": "t:sections.product_collections_collection-page.blocks.menu.settings.default_fold.label",
+          "default": false
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "default": {
+    "settings": {
+      "category_desc_position": "top",
+      "sorter_enable": true,
+      "per_page_num": 16,
+      "infinite_scroll": false,
+      "product_image_ratio": "0",
+      "product_fill_type": "contain",
+      "product_hover_show_next": false,
+      "filter_enable": true,
+      "support_multiple": true,
+      "product_sub_title": "hide"
+    },
+    "blocks": [
+      {
+        "type": "child_category",
+        "settings": {
+          "show_level3_title": true,
+          "show_product_num": true,
+          "default_fold": false
+        }
+      },
+      {
+        "type": "tag_filter",
+        "settings": {
+          "tag_filter_title": "Filters",
+          "tag_data": {
+            "group": "1",
+            "tags": []
+          },
+          "default_fold": false
+        }
+      }
+    ]
+  }
+}
+{{/schema}}
