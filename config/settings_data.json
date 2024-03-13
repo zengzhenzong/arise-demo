@@ -147,11 +147,11 @@
       "co_color_err_color": "#F04949",
       "co_color_msg_color": "#276EAF",
       "show_breadcrumb": true,
-      "co_type_title_font":{
+      "co_type_title_font": {
         "lib": "system",
         "value": "System"
       },
-      "co_type_body_font":{
+      "co_type_body_font": {
         "lib": "system",
         "value": "System"
       },
@@ -160,36 +160,33 @@
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
+        "disabled": false,
         "settings": {
           "show_notice": true,
           "notice_link_text": "30-day postage paid returns",
           "display_mode": "4",
           "show_social_media": false
         },
-        "disabled": false,
         "blocks": {}
       },
       "header": {
         "type": "header",
+        "disabled": false,
         "settings": {
           "color_scheme": "",
-          "logo": null,
           "desktop_logo_width": 100,
           "header_full_width": false,
           "mobile_logo_width": 100,
           "main_menu_link_list_effect": false,
-          "main_menu_link_list": "head",
           "mega_menu_images": false,
           "mega_menu_images_ratio": "50",
           "navigation_layout": "left-left",
           "main_menu_layout": "dropdown",
           "user_mobile_layout": "menu",
-          "mobile_top_menu":"",
-          "mobile_top_menu_show_home":false,
+          "mobile_top_menu_show_home": false,
           "header_style": true,
           "show_line_separator": true,
           "show_search_entry": true,
-          "suggested_menu": "",
           "show_user_entry": true,
           "hover_show_user_menu": false,
           "user_menu_text_1": "",
@@ -203,25 +200,30 @@
           "show_locale_selector": false,
           "padding_top": 0,
           "padding_bottom": 0,
-          "header_division": false
+          "header_division": false,
+          "logo": null,
+          "mobile_top_menu": "",
+          "suggested_menu": "",
+          "main_menu_link_list": "head"
         },
-        "disabled": false
+        "blocks": {}
       },
       "footer": {
         "type": "footer",
+        "disabled": false,
         "settings": {
           "show_locale_selector": false,
           "show_country_selector": false,
           "blocks_col": 4,
           "align_type": "left",
-          "padding_left":30,
-          "padding_right":30,
-          "padding_top":40,
-          "padding_bottom":30,
-          "letter_show_type":"down",
-          "media_show_type":"down",
-          "letter_pc_show_row":false,
-          "media_pc_show_row":false,
+          "padding_left": 30,
+          "padding_right": 30,
+          "padding_top": 40,
+          "padding_bottom": 30,
+          "letter_show_type": "down",
+          "media_show_type": "down",
+          "letter_pc_show_row": false,
+          "media_pc_show_row": false,
           "show_pay_channel": {
             "show": false,
             "pay_channel_list": [
@@ -278,7 +280,6 @@
           "show_social_media": true,
           "footer_division": false
         },
-        "disabled": false,
         "blocks": {
           "footer-menu1": {
             "type": "menu",
@@ -304,7 +305,11 @@
             }
           }
         },
-        "block_order": ["footer-menu1", "footer-menu2", "footer-custom"]
+        "block_order": [
+          "footer-menu1",
+          "footer-menu2",
+          "footer-custom"
+        ]
       }
     }
   },
@@ -456,11 +461,11 @@
         "co_color_err_color": "#F04949",
         "co_color_msg_color": "#276EAF",
         "show_breadcrumb": true,
-        "co_type_title_font":{
+        "co_type_title_font": {
           "lib": "system",
           "value": "System"
         },
-        "co_type_body_font":{
+        "co_type_body_font": {
           "lib": "system",
           "value": "System"
         },
@@ -488,8 +493,8 @@
             "mega_menu_images_ratio": "50",
             "navigation_layout": "left-left",
             "user_mobile_layout": "menu",
-            "mobile_top_menu":"",
-            "mobile_top_menu_show_home":false,
+            "mobile_top_menu": "",
+            "mobile_top_menu_show_home": false,
             "header_style": true,
             "header_full_width": false,
             "show_line_separator": true,
@@ -601,7 +606,11 @@
               }
             }
           },
-          "block_order": ["footer-menu1", "footer-menu2", "footer-custom"]
+          "block_order": [
+            "footer-menu1",
+            "footer-menu2",
+            "footer-custom"
+          ]
         }
       }
     }
