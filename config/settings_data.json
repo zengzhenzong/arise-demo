@@ -174,8 +174,8 @@
         "type": "header",
         "settings": {
           "color_scheme": "",
-          "header_full_width": false,
-          "header_division_bottom": false,
+          "header_full_width": true,
+          "header_division_bottom": true,
           "logo": {
             "url": "https://img.myshopline.com/image/store/1620815557321/ee68ecd2eb901f2c4713427cf2f8348e.jpeg?w=625&h=563",
             "alt": null
