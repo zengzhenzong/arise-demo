@@ -1,6 +1,5 @@
 {
   "name": "blogs/list.html",
-
   "sections": {
     "main-blog-list": {
       "type": "main-blog-list",
@@ -43,9 +42,14 @@
           }
         }
       },
-      "block_order": ["category1", "recent-blog1", "tag1"]
+      "block_order": [
+        "category1",
+        "recent-blog1",
+        "tag1"
+      ]
     }
   },
-
-  "order": ["main-blog-list"]
+  "order": [
+    "main-blog-list"
+  ]
 }
