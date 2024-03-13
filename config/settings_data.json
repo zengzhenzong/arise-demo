@@ -170,23 +170,33 @@
         "blocks": {}
       },
       "header": {
-        "type": "header",
         "disabled": false,
+        "type": "header",
         "settings": {
           "color_scheme": "",
-          "desktop_logo_width": 100,
           "header_full_width": false,
+          "header_division_bottom": false,
+          "logo": {
+            "url": "https://img.myshopline.com/image/store/1620815557321/ee68ecd2eb901f2c4713427cf2f8348e.jpeg?w=625&h=563",
+            "alt": null
+          },
+          "desktop_logo_width": 100,
           "mobile_logo_width": 100,
           "main_menu_link_list_effect": false,
+          "main_menu_link_list": "head",
+          "main_menu_layout": "dropdown",
+          "navigation_layout": "left-left",
+          "mobile_top_menu": "",
+          "mobile_top_menu_show_home": false,
           "mega_menu_images": false,
           "mega_menu_images_ratio": "50",
-          "navigation_layout": "left-left",
-          "main_menu_layout": "dropdown",
           "user_mobile_layout": "menu",
-          "mobile_top_menu_show_home": false,
           "header_style": true,
+          "sticky_index": false,
+          "sticky_collection": false,
           "show_line_separator": true,
           "show_search_entry": true,
+          "suggested_menu": "",
           "show_user_entry": true,
           "hover_show_user_menu": false,
           "user_menu_text_1": "",
@@ -196,17 +206,12 @@
           "user_menu_text_3": "",
           "user_menu_link_3": "",
           "show_cart_entry": true,
-          "show_country_selector": false,
+          "show_locale_selector_position": "aside",
           "show_locale_selector": false,
-          "padding_top": 0,
-          "padding_bottom": 0,
-          "header_division": false,
-          "logo": null,
-          "mobile_top_menu": "",
-          "suggested_menu": "",
-          "main_menu_link_list": "head"
+          "show_country_selector": false
         },
-        "blocks": {}
+        "blocks": {},
+        "custom_css": []
       },
       "footer": {
         "type": "footer",
